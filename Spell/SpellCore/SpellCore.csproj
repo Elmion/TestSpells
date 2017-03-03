@@ -36,17 +36,28 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseSpell.cs" />
-    <Compile Include="Board.cs" />
     <Compile Include="CharapterSystem\BaseCharapter.cs" />
-    <Compile Include="CharapterSystem\IEffect.cs" />
-    <Compile Include="CharapterSystem\IFeature.cs" />
-    <Compile Include="ITrigger.cs" />
-    <Compile Include="SpellBook.cs" />
+    <Compile Include="CharapterSystem\Spells\BaseSpell.cs" />
+    <Compile Include="Board.cs" />
+    <Compile Include="CharapterSystem\CharapterCard.cs" />
+    <Compile Include="CharapterSystem\Features\FireBoll.cs" />
+    <Compile Include="CharapterSystem\Effects\IEffect.cs" />
+    <Compile Include="CharapterSystem\Features\IFeature.cs" />
+    <Compile Include="CharapterSystem\Classes\Mage.cs" />
+    <Compile Include="CharapterSystem\Spells\ITrigger.cs" />
+    <Compile Include="CharapterSystem\SpellBook.cs" />
+    <Compile Include="Core.cs" />
+    <Compile Include="CoreSetup.cs" />
+    <Compile Include="SceneItem.cs" />
+    <Compile Include="Time\History.cs" />
+    <Compile Include="Time\HistoryItem.cs" />
+    <Compile Include="Time\ITimeItem.cs" />
+    <Compile Include="Time\TimeLine.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

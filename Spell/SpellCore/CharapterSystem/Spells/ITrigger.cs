@@ -1,4 +1,4 @@
-﻿namespace SpellCore
+﻿namespace SpellCore.CharapterSystem
 {
     internal interface ITrigger
     {

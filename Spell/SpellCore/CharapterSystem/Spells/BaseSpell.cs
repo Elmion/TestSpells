@@ -1,14 +1,16 @@
-﻿using SpellCore.CharapterSystem;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SpellCore
+namespace SpellCore.CharapterSystem
 {
     class BaseSpell
     {
+        // Они тут потому что надо не забыть----------
+        int isSee;
+        int inRange;
+        //--------------------------------------------
+
+
         Dictionary<ITrigger, IEffect> EffectProcess;
         public void Execute()
         {
@@ -17,6 +19,10 @@ namespace SpellCore
                 if (trigger.Check())
                     EffectProcess[trigger].PutOnBoard();
             }
+        }
+        public void Cast(CharapterCard owner, CharapterCard target)
+        {
+
         }
     }
 }

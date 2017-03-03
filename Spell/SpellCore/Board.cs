@@ -9,7 +9,7 @@ namespace SpellCore
     class Board
     {
         public Action OnBoardAddEffect;
-        public static readonly Board MainBoard = new Board();
+        public static readonly Board Instance = new Board();
         public Board()
         {
 
@@ -17,6 +17,7 @@ namespace SpellCore
         public void AddEffectOnBoard()
         {
             OnBoardAddEffect();
+
         }
         public void PreTurn()
         {
