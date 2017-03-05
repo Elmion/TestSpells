@@ -44,6 +44,7 @@
     <Compile Include="CharapterSystem\Effects\IEffect.cs" />
     <Compile Include="CharapterSystem\Features\IFeature.cs" />
     <Compile Include="CharapterSystem\Classes\Mage.cs" />
+    <Compile Include="CharapterSystem\Spells\GreatLibrary.cs" />
     <Compile Include="CharapterSystem\Spells\ITrigger.cs" />
     <Compile Include="CharapterSystem\SpellBook.cs" />
     <Compile Include="Core.cs" />
