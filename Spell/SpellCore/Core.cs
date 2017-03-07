@@ -18,13 +18,7 @@ namespace SpellCore
         {
             if (owner is BaseCharapter && target is BaseCharapter)
             {
-                BaseCharapter o = owner as BaseCharapter;
-                BaseCharapter t = target as BaseCharapter;
-                if(o.Card.hasSpell(nameSpell) && o.isSee(t,nameSpell) && o.inRange(t,nameSpell))//тут будут ещё условия например на дальность.
-                {
-                    //Здесь сам каст пока не знаю как будет выглядеть
-                    GreatLibrary.StartCastSpell(nameSpell, owner, target);
-                }
+                   return  GreatLibrary.StartCastSpell(nameSpell, (BaseCharapter)owner, (BaseCharapter)target);
             }
            return true;
         }
@@ -33,7 +27,7 @@ namespace SpellCore
             if (owner is BaseCharapter)
             {
                 BaseCharapter o = owner as BaseCharapter;
-                if (o.Card.hasSpell(nameSpell))
+                if (o.Card.isLernSpell(nameSpell))
                 {
                     //Здесь сам каст пока не знаю как будет выглядеть
                     GreatLibrary.InterruptCastingSpell(nameSpell, owner);
@@ -51,7 +45,7 @@ namespace SpellCore
                 if (t.Card.hasSpellEffect(nameSpell))//тут будут ещё условия например на дальность.
                 {
                     //Здесь сам каст пока не знаю как будет выглядеть
-                    GreatLibrary.Dispell(nameSpell, target);
+                    GreatLibrary.SystemDispell(nameSpell, target);
                 }
             }
             return true;

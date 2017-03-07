@@ -53,6 +53,7 @@
     <Compile Include="Time\History.cs" />
     <Compile Include="Time\HistoryItem.cs" />
     <Compile Include="Time\ITimeItem.cs" />
+    <Compile Include="Time\TimeItem.cs" />
     <Compile Include="Time\TimeLine.cs" />
   </ItemGroup>
   <ItemGroup>

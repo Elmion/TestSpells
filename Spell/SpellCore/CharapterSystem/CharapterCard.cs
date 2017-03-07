@@ -24,9 +24,13 @@ namespace SpellCore.CharapterSystem
         {
             Features.Add(Name, feature);
         }
-        internal bool hasSpell(string nameSpell)
+        internal bool isLernSpell(string nameSpell)
         {
             Book.FindSpell(nameSpell);
+        }
+        internal bool hasSpellEffect(string nameSpell)
+        {
+          
         }
     }
 }

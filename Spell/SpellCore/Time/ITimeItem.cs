@@ -9,7 +9,7 @@ namespace SpellCore.Time
     interface ITimeItem
     {
        int TimeStamp { get; set; }
-       Action Reaction { get; set;}
+       Action<object> Reaction { get; set;}
        HistoryItem SaveCurrentState(); 
     }
 }
