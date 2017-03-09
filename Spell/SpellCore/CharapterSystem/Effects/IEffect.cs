@@ -4,15 +4,15 @@ namespace SpellCore.CharapterSystem
 {
     internal interface IEffect
     {
-
-        //Ложит на стол эффект
-        void PutOnBoard();
-        //Собираем список эффектов
-        void GetChangedFeatures();
-        //Изменяем Значение фичи
-        void ChangeSpellFeature(string feature);
+        //Источник эффекта
+        object owner { get; set; }
+        //Цель эффекта
+        object target { get; set; }
+        //Настраивает эффект
+        void SetupEffectPower();
+        //Проверяет может ли наложится эффект
+        bool Check();
         //Выполнить эффект
         void Execute();
     }
-
 }

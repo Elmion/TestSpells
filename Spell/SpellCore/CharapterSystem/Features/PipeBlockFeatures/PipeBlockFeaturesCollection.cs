@@ -12,7 +12,7 @@ namespace SpellCore.CharapterSystem
         public float Amount { get; set; }
         public string Name { get; set; }
 
-        public BaseHealth(object o)
+        public BaseHealth()
         {
 
         }
@@ -31,13 +31,12 @@ namespace SpellCore.CharapterSystem
             throw new NotImplementedException();
         }
     }
-
     class InventoryHealth : IPipeBlockFeature
     {
         public float Amount { get; set; }
         public string Name { get; set; }
 
-        public InventoryHealth(object o)
+        public InventoryHealth()
         {
 
         }
@@ -56,13 +55,12 @@ namespace SpellCore.CharapterSystem
             throw new NotImplementedException();
         }
     }
-
     class SpellHealth : IPipeBlockFeature
     {
         public float Amount { get; set; }
         public string Name { get; set; }
 
-        public SpellHealth(object o)
+        public SpellHealth()
         {
 
         }

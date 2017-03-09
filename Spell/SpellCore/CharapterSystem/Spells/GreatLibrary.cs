@@ -16,7 +16,7 @@ namespace SpellCore.CharapterSystem
             if (owner.Card.isLernSpell(nameSpell) && owner.isSee(target, nameSpell) && owner.inRange(target, nameSpell))//тут будут ещё условия например на дальность.
             {
                 BaseSpell castingSpell = FindSpell(nameSpell);
-                castingSpell.StageSpell = SpellStage.CastingStart;
+                castingSpell.Setup(owner,target);
                 //ставим событие начала каста
                 Time.TimeLine.Instance.ImmediatelyExecute( new TimeItem() { Arg = castingSpell,
                     Reaction = CastingStart
@@ -43,7 +43,7 @@ namespace SpellCore.CharapterSystem
         }
         internal static void CastingStart(object arg)
         {
-            Board.Instance.AddEffectOnBoard(arg as BaseSpell);
+            Board.Instance.CastingStart(arg as BaseSpell);
         }
         private static BaseSpell FindSpell(string nameSpell)
         {

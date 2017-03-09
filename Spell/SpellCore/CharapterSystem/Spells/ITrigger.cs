@@ -2,6 +2,6 @@
 {
     internal interface ITrigger
     {
-        bool Check();
+        IEffect Check();        
     }
 }

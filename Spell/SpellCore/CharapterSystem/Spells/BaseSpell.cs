@@ -7,22 +7,41 @@ namespace SpellCore.CharapterSystem
     class BaseSpell 
     {
         // Они тут потому что надо не забыть----------
+        bool Canceled; //заклинание отменено но ещё не удалено
+        Guid id;
         int isSee;
         int inRange;
         internal int CastingTime { get; set; }
         internal int FlyTime { get; set; }
         internal SpellStage StageSpell { get; set; }
     //--------------------------------------------
-    Dictionary<ITrigger, IEffect> EffectProcess;
+        List<IEffect> EffectProcess;
 
-        public void Execute()
+        public List<IEffect> Execute()
         {
-            foreach (ITrigger trigger in EffectProcess.Keys)
+            
+            List<IEffect> effectsOUT = new List<IEffect>();
+            foreach (IEffect effect in EffectProcess)
             {
-                if (trigger.Check())
-                    EffectProcess[trigger].PutOnBoard();
+                if (effect.Check())
+                    effectsOUT.Add(effect.Execute());
             }
+            return effectsOUT;
         }
+        public void Setup(object owner, object target)
+        {
+            StageSpell = SpellStage.CastingStart;
+            foreach (IEffect effect in EffectProcess)
+            {
+                effect.owner = owner;
+                effect.target = target;
+                effect.SetupActions();
+                effect.SetupEffectPower();
+            }
+
+        }
+
+
     }
     internal enum SpellStage
     {

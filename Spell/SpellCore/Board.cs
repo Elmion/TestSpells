@@ -9,73 +9,38 @@ namespace SpellCore
 {
     class Board
     {
-        public Action OnBoardAddEffect;
-        public Action OnPreTurn;
-        public Action OnBeginTurn;
-        public Action OnAttackFase;
-        public Action OnDefendFase;
-        public Action OnReactionAttack;
-        public Action OnEndTrun;
-        public Action OnLateEndTurn;
-        public Action OnApplyEffect;
+        public static Action<object> OnCastingStart;
+        public static Action<object> OnCastingEnd;
+        public static Action<object> OnSpellCollision;
+        public static Action<object> OnSpellApply;
 
         public static readonly Board Instance = new Board();
 
         private  List<BaseSpell> EffectInTurn;
 
+        private Dictionary<Guid, IEffect> ApllyEffects;
+        private Dictionary<Guid, SceneItem> TargetsEffects;
+
         public Board()
         {
             EffectInTurn = new List<BaseSpell>();
         }
-        public void AddEffectOnBoard(BaseSpell spell)
+        internal void CastingStart(BaseSpell spell)
         {
-            AddedSpell = spell;
-            OnBoardAddEffect();
-            AddedSpell = null;
+
+            OnCastingStart(spell);
         }
-        private void CollectActiveEffectCharapter()
+        private void CastingEnd(BaseSpell spell)
         {
-
+            OnCastingEnd(spell);
         }
-        public bool RegistryCharapterSpellBook()
+        private void SpellCollision(BaseSpell spell)
         {
-            return false;
+            OnSpellCollision(spell);
         }
-        #region TurnStructure
-        public void PreTurn()
+        private void SpellApply(BaseSpell spell)
         {
-
+            OnSpellApply(spell);
         }
-        public void BeginTurn()
-        {
-
-        }
-        public void AttackFase()
-        {
-
-        }
-        public void DefendFase()
-        {
-
-        }
-        public void ReactionAttack()
-        {
-
-        }
-        public void EndTrun()
-        {
-
-        }
-        public void LateEndTurn()
-        {
-
-        }
-        public void ApplyEffect()
-        {
-
-        } 
-        #endregion
-
-
     }
 }
