@@ -37,6 +37,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CharapterSystem\BaseCharapter.cs" />
+    <Compile Include="CharapterSystem\Features\BaseResurce.cs" />
+    <Compile Include="CharapterSystem\Features\PipeBlockFeatures\PipeBlockFeaturesCollection.cs" />
     <Compile Include="CharapterSystem\Spells\BaseSpell.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="CharapterSystem\CharapterCard.cs" />
