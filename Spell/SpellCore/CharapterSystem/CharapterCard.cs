@@ -6,24 +6,24 @@ using System.Threading.Tasks;
 
 namespace SpellCore.CharapterSystem
 {
-    class CharapterCard 
+   public class CharapterCard 
     {
         string Name;
         SpellBook Book;
-        Dictionary<string, IFeature> Features;
+        Dictionary<string, Feature> Features;
 
-        public List<IEffect> Effects { get; set; }
+        private List<IEffect> Effects { get; set; }
 
         public CharapterCard()
         {
             Book = new SpellBook();
-            Features = new Dictionary<string, IFeature>();
+            Features = new Dictionary<string, Feature>();
             Effects = new List<IEffect>();
         }
         
 
         //Добавляет характеристику в класс в класс
-        internal void AddFeature(string Name , IFeature feature)
+        internal void AddFeature(string Name , Feature feature)
         {
             Features.Add(Name, feature);
         }
@@ -49,6 +49,10 @@ namespace SpellCore.CharapterSystem
                 if (flag) OutList.Add(Effects[i]);
             }
             return  OutList;
+        }
+        public Feature GetFeature(string name)
+        {
+            return Features[name];
         }
     }
 }

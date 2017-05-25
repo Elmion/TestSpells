@@ -38,7 +38,7 @@
   <ItemGroup>
     <Compile Include="CharapterSystem\BaseCharapter.cs" />
     <Compile Include="CharapterSystem\Features\BaseResurce.cs" />
-    <Compile Include="CharapterSystem\Features\PipeBlockFeatures\PipeBlockFeaturesCollection.cs" />
+    <Compile Include="CharapterSystem\IResurcePipeBlock.cs" />
     <Compile Include="CharapterSystem\Spells\BaseSpell.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="CharapterSystem\CharapterCard.cs" />
@@ -46,6 +46,7 @@
     <Compile Include="CharapterSystem\Effects\IEffect.cs" />
     <Compile Include="CharapterSystem\Features\IFeature.cs" />
     <Compile Include="CharapterSystem\Classes\Mage.cs" />
+    <Compile Include="CharapterSystem\Spells\Formula.cs" />
     <Compile Include="CharapterSystem\Spells\GreatLibrary.cs" />
     <Compile Include="CharapterSystem\Spells\ITrigger.cs" />
     <Compile Include="CharapterSystem\SpellBook.cs" />

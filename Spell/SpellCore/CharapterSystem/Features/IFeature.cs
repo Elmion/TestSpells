@@ -1,12 +1,17 @@
 ﻿
 namespace SpellCore.CharapterSystem
 {
-    interface IFeature
+    public class Feature
     {
-
-        float Value { get; set; }
-        void Change(float ammont);
-        void Set(float ammont);
+        public float Value { get; private set; }
+        public void Change(float ammont)
+        {
+            Value += ammont;
+        }
+        public void Set(float ammont)
+        {
+            Value = ammont;
+        }
 
     }
 }
