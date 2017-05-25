@@ -20,7 +20,6 @@ namespace SpellCore.CharapterSystem
         {
             throw new NotImplementedException();
         }
-
         public void Recalculation()
         {
             throw new NotImplementedException();

@@ -10,10 +10,18 @@ namespace SpellCore.CharapterSystem.Features
     {
         List<IResurcePipeBlock> PipeBlocks;
         public object owner;
+
         public BaseResurce(object owner)
         {
             PipeBlocks = new List<IResurcePipeBlock>();
             this.owner = owner;
+        }
+        public IResurcePipeBlock this[Type PipeBlock]
+        {
+            get
+            {
+                return PipeBlocks.FirstOrDefault(x => x.GetType() == PipeBlock);
+            }
         }
         public void AddNewBlock(IResurcePipeBlock block)
         {
@@ -23,78 +31,37 @@ namespace SpellCore.CharapterSystem.Features
         {
             return PipeBlocks.Remove(block);
         }
-        public void RegModificatorChanger(string mod)
-        {
-            IResurcePipeBlock blockWithModificator;
-            foreach (var block in PipeBlocks)
-            {
-                if(block.hasModificator(mod))
-                {
-                    blockWithModificator = block;
-                    break;
-                }
-            }
-            if(blockWithModificator != null) blockWithModificator[mod].AddOrigin()//////////?????????????????????????????
-        }
-        public void UnRegModificatorChanger()
-        {
-
-        }
     }
     interface IResurcePipeBlock
     {
-        IPipeBlockFeature this[string name] {get;set;}
         float Value { get; set; }
         float MaxValue { get; }
-        bool hasModificator(string mod);
         //Входной выходной дамаг.. по сути тут формула уменьшения дамага проходящего через блок
         float TakeDamage(float inputDamage);
         //Востанавливает характеристику, если реализовано и отдаёт оверх хил
         float Restoration(float inputHeal);
     }
-    interface IPipeBlockFeature
+    class BaseHealth : IResurcePipeBlock
     {
-        string Name { get; set; }
-        float Amount { get; set; }
-        void Recalculation();//обращается ко всем источникам для уточнения характеристики
-        void AddOrigin(object origin,int powerOrigin);
-        void RemoveOrigin(object origin);
-    }
-    class Health : IResurcePipeBlock
-    {
-        private Dictionary<string, IPipeBlockFeature> Modificators;
-        public IPipeBlockFeature this[string name]
-        {
-            get
-            {
-                return Modificators[name];
-            }
-            set
-            {
-
-            }
-        }
+        private object Owner;
         public bool Active { get; set; }
         public float Value { get; set; }
         public float MaxValue 
             {
                 get
                     {
-                        return Modificators["BaseHealth"].Amount + Modificators["InventoryHealth"].Amount + Modificators["SpellHealth"].Amount;
+                        return ;
                     }
             }
-        public Health(object ItemOwner)
+        public BaseHealth(object ItemOwner)
         {
             Active = true;
-            Modificators = new Dictionary<string, IPipeBlockFeature>();
-            Modificators.Add("BaseHealth" ,     new BaseHealth());
-            Modificators.Add("InventoryHealth", new InventoryHealth());
-            Modificators.Add("SpellHealth",     new SpellHealth());
+            Owner = ItemOwner;
+            Modificators = new List<IPipeBlockFeature>();
+            Modificators.Add(new BaseHealth());
+            Modificators.Add(new InventoryHealth());
+            Modificators.Add(new SpellHealth());
             Value = MaxValue;
-        }
-        public bool  hasModificator(string mod)
-        {
-            return Modificators.Keys.Contains<string>(mod);
         }
         //востанавливаем до возможного максимума
         public float Restoration(float inputHeal)
