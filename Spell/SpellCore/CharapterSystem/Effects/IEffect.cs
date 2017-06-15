@@ -2,7 +2,7 @@
 
 namespace SpellCore.CharapterSystem
 {
-    internal interface IEffect
+    public  interface IEffect
     {
         //Источник эффекта
         object owner { get; set; }

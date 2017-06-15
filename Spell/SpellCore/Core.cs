@@ -11,7 +11,7 @@ namespace SpellCore
     /// Единая точка входа для стороних систем
     /// Пока преимущественно расматриваем вариант jRPG как самый простой варинат кастовки заклинаний
     /// </summary>
-    class Core
+    public class Core
     {
         
         public static bool CastSpell(string nameSpell,object owner,object target)
@@ -49,6 +49,19 @@ namespace SpellCore
                 }
             }
             return true;
+        }
+        public static BaseCharapter CreateCharapter(string charapterClass)
+        {
+            BaseCharapter chOUT = null;
+            switch (charapterClass)
+            {
+                case "Mage":
+                    {
+                        chOUT = new BaseCharapter(typeof(Mage));
+                        break;
+                    }
+            }
+            return chOUT;
         }
     }
 }

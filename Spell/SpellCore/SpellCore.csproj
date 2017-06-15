@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{A74E1345-77FA-48E1-8F94-3FE1B721CFEA}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SpellCore</RootNamespace>
     <AssemblyName>SpellCore</AssemblyName>
@@ -32,19 +32,26 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CharapterSystem\BaseCharapter.cs" />
-    <Compile Include="CharapterSystem\Features\BaseResurce.cs" />
-    <Compile Include="CharapterSystem\IResurcePipeBlock.cs" />
+    <Compile Include="CharapterSystem\ResurceEngine\BaseResurce.cs" />
+    <Compile Include="CharapterSystem\ResurceEngine\Health.cs" />
+    <Compile Include="CharapterSystem\ResurceEngine\AttackModule.cs" />
+    <Compile Include="CharapterSystem\ResurceEngine\ResurscePipeBlocks\BaseHealth.cs" />
+    <Compile Include="CharapterSystem\ResurceEngine\ResurscePipeBlocks\BaseShield.cs" />
+    <Compile Include="CharapterSystem\ResurceEngine\ResurscePipeBlocks\IResurcePipeBlock.cs" />
     <Compile Include="CharapterSystem\Spells\BaseSpell.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="CharapterSystem\CharapterCard.cs" />
     <Compile Include="CharapterSystem\Features\FireBoll.cs" />
     <Compile Include="CharapterSystem\Effects\IEffect.cs" />
-    <Compile Include="CharapterSystem\Features\IFeature.cs" />
+    <Compile Include="CharapterSystem\Features\Feature.cs" />
     <Compile Include="CharapterSystem\Classes\Mage.cs" />
     <Compile Include="CharapterSystem\Spells\Formula.cs" />
     <Compile Include="CharapterSystem\Spells\GreatLibrary.cs" />

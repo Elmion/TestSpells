@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpellCore
 {
-    class SceneItem : IEqualityComparer<SceneItem>
+    public class SceneItem : IEqualityComparer<SceneItem>
     {
        public string Name { get; set; }
        public Guid UN { get; set; }

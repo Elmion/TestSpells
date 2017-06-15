@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spell", "Spell\Spell.csproj", "{9D5B4B79-FEC1-49FA-96FF-E96A29595540}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpellCore", "SpellCore\SpellCore.csproj", "{A74E1345-77FA-48E1-8F94-3FE1B721CFEA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpellTest", "SpellTest\SpellTest.csproj", "{D629D8B0-DE4F-4B1E-9BE5-F082DA476725}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{A74E1345-77FA-48E1-8F94-3FE1B721CFEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A74E1345-77FA-48E1-8F94-3FE1B721CFEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A74E1345-77FA-48E1-8F94-3FE1B721CFEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D629D8B0-DE4F-4B1E-9BE5-F082DA476725}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D629D8B0-DE4F-4B1E-9BE5-F082DA476725}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D629D8B0-DE4F-4B1E-9BE5-F082DA476725}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D629D8B0-DE4F-4B1E-9BE5-F082DA476725}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

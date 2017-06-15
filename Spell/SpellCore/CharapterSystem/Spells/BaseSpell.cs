@@ -23,8 +23,8 @@ namespace SpellCore.CharapterSystem
             List<IEffect> effectsOUT = new List<IEffect>();
             foreach (IEffect effect in EffectProcess)
             {
-                if (effect.Check())
-                    effectsOUT.Add(effect.Execute());
+               // if (effect.Check())
+                 //   effectsOUT.Add(effect.Execute());
             }
             return effectsOUT;
         }
@@ -35,7 +35,7 @@ namespace SpellCore.CharapterSystem
             {
                 effect.owner = owner;
                 effect.target = target;
-                effect.SetupActions();
+               // effect.SetupActions();
                 effect.SetupEffectPower();
             }
 

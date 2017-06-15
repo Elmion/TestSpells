@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SpellCore.CharapterSystem.ResurceEngine;
 
 namespace SpellCore.CharapterSystem
 {
@@ -10,18 +11,23 @@ namespace SpellCore.CharapterSystem
     {
         string Name;
         SpellBook Book;
-        Dictionary<string, Feature> Features;
+        public  Dictionary<string, Feature> Features;
+        public Health CharapterHealth;
+        private BaseCharapter baseCharapter;
 
         private List<IEffect> Effects { get; set; }
 
-        public CharapterCard()
+        public CharapterCard(BaseCharapter baseCharapter)
         {
             Book = new SpellBook();
             Features = new Dictionary<string, Feature>();
             Effects = new List<IEffect>();
+            CharapterHealth = new Health(baseCharapter);
         }
-        
-
+        public void Init()
+        {
+            CharapterHealth.Reset();
+        }
         //Добавляет характеристику в класс в класс
         internal void AddFeature(string Name , Feature feature)
         {
@@ -29,11 +35,11 @@ namespace SpellCore.CharapterSystem
         }
         internal bool isLernSpell(string nameSpell)
         {
-            Book.FindSpell(nameSpell);
+           return Book.FindSpell(nameSpell) != null ? true:false;
         }
         internal bool hasSpellEffect(string nameSpell)
         {
-          
+            throw (new NotImplementedException());
         }
         public List<IEffect> GetSpellsWithTags(EffectTag[] Tags)
         {

@@ -6,19 +6,22 @@ using System.Threading.Tasks;
 
 namespace SpellCore.CharapterSystem
 {
-    class BaseCharapter : SceneItem
+   public class BaseCharapter : SceneItem
     {
        public readonly CharapterCard Card;//карта персонажа 
-       public BaseCharapter() : base()
+       public BaseCharapter(Type CharapterClass) : base()
         {
-            Card = new CharapterCard();
+            if (CharapterClass == typeof(Mage))
+            {
+                Card = new Mage(this);
+            }
+            if(Card != null) Card.Init();
         }
 
         internal bool inRange(BaseCharapter t)
         {
             throw new NotImplementedException();
         }
-
         #region Возможно стоит это переделать или унести в другое место
         /// <summary>
         /// Проверяем видит ли персонаж цель (для jRPG мы видим всегда. Для Actiona надо задать метод определяющий видимость
@@ -60,5 +63,6 @@ namespace SpellCore.CharapterSystem
             }
         } 
         #endregion
+        
     }
 }

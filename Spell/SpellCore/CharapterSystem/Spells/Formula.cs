@@ -9,9 +9,13 @@ namespace SpellCore
 {
     public static class Formula
     {
-        public static float GetMaxBaseHealth(CharapterCard card)
+        public static float GetMaxBaseHealth(BaseCharapter bc)
         {
-            return card.GetFeature("Vitality").Value * 10;
+            return bc.Card.GetFeature("Vitality").Value * 100;
+        }
+        public static float GetSizeShild(BaseCharapter bc)
+        {
+            return bc.Card.GetFeature("Intellect").Value * 5;
         }
     }
 }
