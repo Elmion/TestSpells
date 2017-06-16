@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using SpellCore.Time;
+using SpellCore.Commands;
 namespace SpellCore
 {
     /// <summary>
@@ -13,31 +14,27 @@ namespace SpellCore
     /// </summary>
     public class Core
     {
-        
-        public static bool CastSpell(string nameSpell,object owner,object target)
+        public TimeLine Time { get; private set; }
+        public List<BaseCharapter> Actors;
+        //Нужна инициализация
+        public void Initialize()
         {
-            if (owner is BaseCharapter && target is BaseCharapter)
-            {
-                   return  GreatLibrary.StartCastSpell(nameSpell, (BaseCharapter)owner, (BaseCharapter)target);
-            }
-           return true;
+            Time = new TimeLine();
+            Actors = new List<BaseCharapter>();
+
         }
-        public static bool InterruptCastingSpell(string nameSpell, object owner)
+        public object Run(ICommand command)
         {
-            if (owner is BaseCharapter)
-            {
-                BaseCharapter o = owner as BaseCharapter;
-                if (o.Card.isLernSpell(nameSpell))
-                {
-                    //Здесь сам каст пока не знаю как будет выглядеть
-                    GreatLibrary.InterruptCastingSpell(nameSpell, owner);
-                }
-            }
-            return true;
+            if (command.CommandRight)
+                return command.Execute();
+            else
+                return null;
         }
+        //Статичные методы
+
         //Возможно нужно будет ещё одна ветка методов с удалением без активирования последствий
         //но пока что так.
-        public static bool RemoveSpellFromObject(string nameSpell, object target)
+        public bool RemoveSpellFromObject(string nameSpell, object target)
         {
             if (target is BaseCharapter)
             {
@@ -52,16 +49,7 @@ namespace SpellCore
         }
         public static BaseCharapter CreateCharapter(string charapterClass)
         {
-            BaseCharapter chOUT = null;
-            switch (charapterClass)
-            {
-                case "Mage":
-                    {
-                        chOUT = new BaseCharapter(typeof(Mage));
-                        break;
-                    }
-            }
-            return chOUT;
+
         }
     }
 }

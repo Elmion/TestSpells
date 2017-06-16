@@ -57,6 +57,10 @@
     <Compile Include="CharapterSystem\Spells\GreatLibrary.cs" />
     <Compile Include="CharapterSystem\Spells\ITrigger.cs" />
     <Compile Include="CharapterSystem\SpellBook.cs" />
+    <Compile Include="Commands\cmdCastSpell.cs" />
+    <Compile Include="Commands\cmdCreateCharapter.cs" />
+    <Compile Include="Commands\cmdInterruptCastingSpell.cs" />
+    <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="CoreSetup.cs" />
     <Compile Include="SceneItem.cs" />

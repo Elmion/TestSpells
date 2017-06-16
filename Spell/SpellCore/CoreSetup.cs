@@ -13,7 +13,7 @@ namespace SpellCore
     /// если этих методы не  подключены то возвращаем значения которые были бы актальны для jRPG
     /// однако остальную логику пишем исходя из того что это ActionRPG.
     /// </summary>
-    class CoreSetup
+   class CoreSetup
     {
         public static Func<object, bool> isSee;
         public static Func<object, bool> inRange;

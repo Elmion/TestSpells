@@ -29,7 +29,6 @@ namespace SpellCore.CharapterSystem
                     Reaction = CastingComplete
                 });
                 return true;//поставили в очереди
-
             }
             else
             {

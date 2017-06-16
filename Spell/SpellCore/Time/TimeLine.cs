@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace SpellCore.Time
 {
-    class TimeLine
+    public class TimeLine
     {
-        public static readonly TimeLine Instance = new TimeLine();
         public Action StartTik { get; set; }
         public Action EndTik   { get; set; }
 
         private int _currentTime = 0;
         private List<TimeItem> Line;
+        private Core core;
         /// <summary>
         /// Предоставляет текущее время
         /// </summary>
@@ -21,10 +21,15 @@ namespace SpellCore.Time
         {
             get { return _currentTime; }
         } 
-        private TimeLine()
+        public TimeLine()
         {
+
             Line = new List<TimeItem>();
             _currentTime = 0;
+        }
+        public void Initialize(Core core)
+        {
+            this.core = core;
         }
         public void Tik()
         {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SpellCore.Time
 {
-    class TimeItem : ITimeItem
+    public class TimeItem : ITimeItem
     {
         public object Arg { get; set; }
         public Action<object> Reaction { get; set; }
