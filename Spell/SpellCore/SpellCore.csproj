@@ -40,30 +40,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CharapterSystem\BaseCharapter.cs" />
-    <Compile Include="CharapterSystem\ResurceEngine\BaseResurce.cs" />
-    <Compile Include="CharapterSystem\ResurceEngine\Health.cs" />
-    <Compile Include="CharapterSystem\ResurceEngine\AttackModule.cs" />
-    <Compile Include="CharapterSystem\ResurceEngine\ResurscePipeBlocks\BaseHealth.cs" />
-    <Compile Include="CharapterSystem\ResurceEngine\ResurscePipeBlocks\BaseShield.cs" />
-    <Compile Include="CharapterSystem\ResurceEngine\ResurscePipeBlocks\IResurcePipeBlock.cs" />
     <Compile Include="CharapterSystem\Spells\BaseSpell.cs" />
-    <Compile Include="Board.cs" />
-    <Compile Include="CharapterSystem\CharapterCard.cs" />
+    <Compile Include="Trash\Board.cs" />
     <Compile Include="CharapterSystem\Features\FireBoll.cs" />
     <Compile Include="CharapterSystem\Effects\IEffect.cs" />
     <Compile Include="CharapterSystem\Features\Feature.cs" />
-    <Compile Include="CharapterSystem\Classes\Mage.cs" />
-    <Compile Include="CharapterSystem\Spells\Formula.cs" />
     <Compile Include="CharapterSystem\Spells\GreatLibrary.cs" />
     <Compile Include="CharapterSystem\Spells\ITrigger.cs" />
     <Compile Include="CharapterSystem\SpellBook.cs" />
     <Compile Include="Commands\cmdCastSpell.cs" />
     <Compile Include="Commands\cmdCreateCharapter.cs" />
     <Compile Include="Commands\cmdInterruptCastingSpell.cs" />
+    <Compile Include="Commands\cmdRemoveSpellFromObject.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="CoreSetup.cs" />
-    <Compile Include="SceneItem.cs" />
+    <Compile Include="Trash\SceneItem.cs" />
     <Compile Include="Time\History.cs" />
     <Compile Include="Time\HistoryItem.cs" />
     <Compile Include="Time\ITimeItem.cs" />
@@ -75,6 +67,19 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Description\TextFile1.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CharapterCards\CharapterCards.csproj">
+      <Project>{c150fbe9-c77d-49fd-b05b-570c194e771d}</Project>
+      <Name>CharapterCards</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{9f7bccf4-7991-4243-9c82-48a58f7c19ec}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CharapterSystem\Classes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

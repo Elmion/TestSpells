@@ -21,35 +21,10 @@ namespace SpellCore
         {
             Time = new TimeLine();
             Actors = new List<BaseCharapter>();
-
         }
         public object Run(ICommand command)
         {
-            if (command.CommandRight)
-                return command.Execute();
-            else
-                return null;
-        }
-        //Статичные методы
-
-        //Возможно нужно будет ещё одна ветка методов с удалением без активирования последствий
-        //но пока что так.
-        public bool RemoveSpellFromObject(string nameSpell, object target)
-        {
-            if (target is BaseCharapter)
-            {
-                BaseCharapter t = target as BaseCharapter;
-                if (t.Card.hasSpellEffect(nameSpell))//тут будут ещё условия например на дальность.
-                {
-                    //Здесь сам каст пока не знаю как будет выглядеть
-                    GreatLibrary.SystemDispell(nameSpell, target);
-                }
-            }
-            return true;
-        }
-        public static BaseCharapter CreateCharapter(string charapterClass)
-        {
-
+           return command.Execute();
         }
     }
 }

@@ -20,7 +20,7 @@ namespace SpellCore.Commands
             this.owner     = owner;
             this.target    = target;
         }
-        public object Excute()
+        public object Execute()
         {
            return GreatLibrary.StartCastSpell(nameSpell,owner, target);
         }

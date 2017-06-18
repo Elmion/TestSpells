@@ -13,27 +13,28 @@ namespace SpellCore.CharapterSystem
         internal static bool StartCastSpell(string nameSpell, BaseCharapter owner, BaseCharapter target)
         {
 
-            if (owner.Card.isLernSpell(nameSpell) && owner.isSee(target, nameSpell) && owner.inRange(target, nameSpell))//тут будут ещё условия например на дальность.
-            {
-                BaseSpell castingSpell = FindSpell(nameSpell);
-                castingSpell.Setup(owner,target);
-                //ставим событие начала каста
-                Time.TimeLine.Instance.ImmediatelyExecute( new TimeItem() { Arg = castingSpell,
-                    Reaction = CastingStart
-                } );
-                //ставим событие после 
-                Time.TimeLine.Instance.AddTimeItem(new TimeItem()
-                {
-                    TimeStamp = castingSpell.CastingTime,
-                    Arg = castingSpell,
-                    Reaction = CastingComplete
-                });
-                return true;//поставили в очереди
-            }
-            else
-            {
-                return false;
-            }
+            //if (owner.Card.isLernSpell(nameSpell) && owner.isSee(target, nameSpell) && owner.inRange(target, nameSpell))//тут будут ещё условия например на дальность.
+            //{
+            //    BaseSpell castingSpell = FindSpell(nameSpell);
+            //    castingSpell.Setup(owner,target);
+            //    //ставим событие начала каста
+            //    //Time.TimeLine.Instance.ImmediatelyExecute( new TimeItem() { Arg = castingSpell,
+            //        Reaction = CastingStart
+            //    } );
+            //    //ставим событие после 
+            //    //Time.TimeLine.Instance.AddTimeItem(new TimeItem()
+            //    //{
+            //    //    TimeStamp = castingSpell.CastingTime,
+            //    //    Arg = castingSpell,
+            //    //    Reaction = CastingComplete
+            //    //});
+            //    return true;//поставили в очереди
+        
+            //else
+            //{
+            //    return false;
+            //}
+         return false;
         }
 
         internal static void CastingComplete(object arg)

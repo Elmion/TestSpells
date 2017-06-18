@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using CharapterCards;
 namespace SpellCore.CharapterSystem
 {
-   public class BaseCharapter : SceneItem
+   public class BaseCharapter //: SceneItem
     {
-       public readonly CharapterCard Card;//карта персонажа 
-       public BaseCharapter(Type CharapterClass) : base()
-        {
-            if (CharapterClass == typeof(Mage))
-            {
-                Card = new Mage(this);
-            }
-            if(Card != null) Card.Init();
-        }
+       public readonly CharapterCard Card;//карточка персонажа 
 
+       public BaseCharapter(Type CharapterClass) 
+        {
+            //if (CharapterClass == typeof(Mage))
+            //{
+            //       Card = new CharapterCard();
+            //}
+            //if(Card != null) Card.Init();
+        }
         internal bool inRange(BaseCharapter t)
         {
             throw new NotImplementedException();

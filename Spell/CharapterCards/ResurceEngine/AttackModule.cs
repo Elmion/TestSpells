@@ -4,20 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpellCore.CharapterSystem.ResurceEngine
+namespace CharapterCards
 {
     public class AttackModule
     {
-       public AttackTypes ProccesingType { get; set; }
+       public ModuleEffectTypes ProccesingType { get; set; }
        public float ShildPenetration;
        public float ArmorPenetration;
        public float DamageValue;
        public float ManaCost;
        public string[] KeyWords { get; set; }
     }
-    public enum AttackTypes
+    public enum ModuleEffectTypes
     {
-        Standart,
+        Damage,
         Restore,
         WithoutDamage,
         AfterBufferShild

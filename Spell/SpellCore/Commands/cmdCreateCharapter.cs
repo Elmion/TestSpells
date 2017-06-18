@@ -17,7 +17,7 @@ namespace SpellCore.Commands
             {
                 case "Mage":
                     {
-                        chOUT = new BaseCharapter(typeof(Mage));
+                       // chOUT = new BaseCharapter(typeof(Mage));
                         break;
                     }
             }

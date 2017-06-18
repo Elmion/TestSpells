@@ -1,13 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spell", "Spell\Spell.csproj", "{9D5B4B79-FEC1-49FA-96FF-E96A29595540}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpellCore", "SpellCore\SpellCore.csproj", "{A74E1345-77FA-48E1-8F94-3FE1B721CFEA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpellTest", "SpellTest\SpellTest.csproj", "{D629D8B0-DE4F-4B1E-9BE5-F082DA476725}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{9F7BCCF4-7991-4243-9C82-48A58F7C19EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CharapterCards", "CharapterCards\CharapterCards.csproj", "{C150FBE9-C77D-49FD-B05B-570C194E771D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormulasStorage", "FormulasStorage\FormulasStorage.csproj", "{D7ECA0B9-6E43-4AB9-AB3D-958763EF4CED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +33,18 @@ Global
 		{D629D8B0-DE4F-4B1E-9BE5-F082DA476725}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D629D8B0-DE4F-4B1E-9BE5-F082DA476725}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D629D8B0-DE4F-4B1E-9BE5-F082DA476725}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F7BCCF4-7991-4243-9C82-48A58F7C19EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F7BCCF4-7991-4243-9C82-48A58F7C19EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F7BCCF4-7991-4243-9C82-48A58F7C19EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F7BCCF4-7991-4243-9C82-48A58F7C19EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C150FBE9-C77D-49FD-B05B-570C194E771D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C150FBE9-C77D-49FD-B05B-570C194E771D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C150FBE9-C77D-49FD-B05B-570C194E771D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C150FBE9-C77D-49FD-B05B-570C194E771D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7ECA0B9-6E43-4AB9-AB3D-958763EF4CED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7ECA0B9-6E43-4AB9-AB3D-958763EF4CED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7ECA0B9-6E43-4AB9-AB3D-958763EF4CED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7ECA0B9-6E43-4AB9-AB3D-958763EF4CED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

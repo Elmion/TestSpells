@@ -17,7 +17,8 @@ namespace SpellCore.Commands
         }       
         public object Execute()
         { 
-           GreatLibrary.InterruptCastingSpell( target);
+         //  GreatLibrary.InterruptCastingSpell( target);
+            return null;
         }
     }
 }
