@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Common
 {
-    public enum Keywords
+   public enum ResistEnum
     {
-        BaseHealth,
-        Shield,
-        Resist
+        Cold,
+        Fire,
+        Phisic,
+        Magic
     }
 }

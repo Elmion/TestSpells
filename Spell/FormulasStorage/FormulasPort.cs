@@ -8,9 +8,9 @@ using SpellCore;
 using SpellCore.CharapterSystem;
 namespace FormulasStorage
 {
-    class FormulasPort
+   public class FormulasPort
     {
-       public void Initialize(BaseCharapter  bc)
+       public static void Initialize(BaseCharapter  bc)
         {
             FormulasConnector.MaxBaseHealth = Formula.GetMaxBaseHealth;
         }

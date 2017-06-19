@@ -11,9 +11,11 @@ namespace CharapterCards
     /// </summary>
     public class BaseResurce
     {
+        internal CharapterCard card;
         internal List<KeyValuePair<string, IResurcePipeBlock>> PipeBlocks { get; private set; }
         public BaseResurce(CharapterCard card)
         {
+            this.card = card;
             PipeBlocks = new List<KeyValuePair<string, IResurcePipeBlock>>();
         }
         public void TakeExtarnalEffect(AttackModule InputAttackModule)
@@ -23,7 +25,7 @@ namespace CharapterCards
                 case ModuleEffectTypes.Damage:
                 case ModuleEffectTypes.Restore:
                     // Проходим пайп в обратном порядке подкюченных модулей
-                    for (int i = PipeBlocks.Count-1; i <= 0; i--)
+                    for (int i = PipeBlocks.Count-1; i >= 0; i--)
                     {
                         InputAttackModule = PipeBlocks[i].Value.TakeExtarnalEffect(InputAttackModule);
                     }
@@ -49,7 +51,7 @@ namespace CharapterCards
         }
         public IResurcePipeBlock AddBlock(string nameBlock,params object[] arg)
         {
-            IResurcePipeBlock OUT = PipeBlockFabric.Create(nameBlock, arg);
+            IResurcePipeBlock OUT = PipeBlockFabric.Create(nameBlock,card, arg);
             if ( PipeBlocks.FindIndex(x => x.Key == nameBlock) != -1)
             {
                 ChangeBlock(nameBlock, OUT);

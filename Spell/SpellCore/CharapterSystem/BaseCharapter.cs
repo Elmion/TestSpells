@@ -12,9 +12,10 @@ namespace SpellCore.CharapterSystem
 
        public BaseCharapter(Type CharapterClass) 
         {
+            Card = new CharapterCard();
             //if (CharapterClass == typeof(Mage))
             //{
-            //       Card = new CharapterCard();
+            //       
             //}
             //if(Card != null) Card.Init();
         }

@@ -8,20 +8,18 @@ namespace CharapterCards
 {
     class PipeBlockFabric
     {
-        public static IResurcePipeBlock Create(string s,params object[] arg)
+        public static IResurcePipeBlock Create(string s,CharapterCard card, params object[] arg)
         {
             switch (s)
             {
                 case "BaseHealth":
                     {
-                        if(arg.Length == 1)
-                            return new BaseHealth((CharapterCard)arg[0]);
-                        return null;
+                            return new BaseHealth(card);
                     }
-                case "BasicShield":
+                case "BaseShield":
                     {
-                        if(arg.Length == 2)
-                            return new BaseShield((CharapterCard)arg[0], (float)arg[1]);
+                        if(arg.Length == 1)
+                            return new BaseShield(card, (float)arg[0]);
                         return null;
                     }
                 default:
