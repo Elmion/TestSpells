@@ -38,8 +38,17 @@ namespace CharapterCards
         }
         public AttackModule TakeExtarnalEffect(AttackModule InputAttackModule)
         {
+            //Для начала отделим пробивший щит дамаг который пойдёт дальше
+            float PenetrationDamage = 0f;
+            if(InputAttackModule.Penetrations.ContainsKey(GetType()) && InputAttackModule.ProccesingType != ModuleEffectTypes.Restore)//Если есть такое пробивание и заклинание не востанавливающее
+                {
+                   //ФОРМУЛА ПРОБИВАНИЯ
+                    PenetrationDamage = InputAttackModule.DamageValue * (float)InputAttackModule.Penetrations[GetType()] / 100f;
+                    InputAttackModule.DamageValue -= PenetrationDamage;//Пока вычтем этот дамаг из расчёта он в любом случае идёт дальше
+                }            
             switch (InputAttackModule.ProccesingType)
             {
+                
                 case ModuleEffectTypes.Damage:
                     if (CurrentValue - InputAttackModule.DamageValue > 0)
                     {
@@ -67,6 +76,7 @@ namespace CharapterCards
                     }
                     break;
             }
+            InputAttackModule.DamageValue += PenetrationDamage;//Вернем пробавающий урон наместо
             return InputAttackModule;
         }
         public void Update()

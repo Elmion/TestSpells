@@ -17,7 +17,7 @@ namespace CharapterCards
                 return new Keywords[] { Keywords.Resist };
             }
         }
-        public bool MarkToRemove  { get {return false }}//Неудаляемый блок
+        public bool MarkToRemove  { get { return false; }}//Неудаляемый блок
         public float CurrentValue { get; set; }
         public float MaxValue
         {
@@ -36,7 +36,6 @@ namespace CharapterCards
             ListResist = new Dictionary<ResistEnum, float>();
             foreach (ResistEnum item in Enum.GetValues(typeof(ResistEnum))) ListResist.Add(item, 0); //Добавили все сопротивления с нулевыми значениями
         }
-
         public AttackModule TakeExtarnalEffect(AttackModule InputAttackModule)
         {
             switch (InputAttackModule.ProccesingType)
@@ -68,10 +67,6 @@ namespace CharapterCards
                     break;
             }
             return InputAttackModule;
-        }
-        public void ResistAdd(ResistEnum typeResist, float NewValue)
-        {
-
         }
         public float this[ResistEnum typeResist]
         {
