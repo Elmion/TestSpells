@@ -13,5 +13,10 @@ namespace FormulasStorage
         {
             return cc.GetFeature("Vitality").Value * 100;
         }
+        //Формула пробивания щита/брони
+        public static float GetPenetrationDamage(AttackModule InputAttackModule, Type type)
+        {
+            return InputAttackModule.DamageValue * (float)InputAttackModule.Penetrations[GetType()] / 100f;
+        }
     }
 }

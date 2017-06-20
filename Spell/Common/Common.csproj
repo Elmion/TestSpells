@@ -43,6 +43,8 @@
     <Compile Include="Keywords.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResistEnum.cs" />
+    <Compile Include="ResurceBlocks.cs" />
+    <Compile Include="SaveStat.cs" />
     <Compile Include="StatusEnum.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

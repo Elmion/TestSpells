@@ -11,13 +11,19 @@ namespace CharapterCards
         string Name;
         public  Dictionary<string, Feature> Features;
         public  BaseResurce Health;
-        public  BaseResurce Mana;
+        public  BaseResurce Stamina;
 
         public CharapterCard()
         {
             Features = new Dictionary<string, Feature>();
             Health = new BaseResurce(this);
-            Mana = new BaseResurce(this);
+            Stamina = new BaseResurce(this);
+            List<BaseResurce> SaveList = new List<BaseResurce>()
+            {
+                new BaseResurce(this),//Воля
+                new BaseResurce(this),//Стойкость
+                new BaseResurce(this) //Рефлексы
+            };
         }
         public void Init()
         {

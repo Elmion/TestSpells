@@ -42,8 +42,8 @@ namespace CharapterCards
             float PenetrationDamage = 0f;
             if(InputAttackModule.Penetrations.ContainsKey(GetType()) && InputAttackModule.ProccesingType != ModuleEffectTypes.Restore)//Если есть такое пробивание и заклинание не востанавливающее
                 {
-                   //ФОРМУЛА ПРОБИВАНИЯ
-                    PenetrationDamage = InputAttackModule.DamageValue * (float)InputAttackModule.Penetrations[GetType()] / 100f;
+                     //ФОРМУЛА ПРОБИВАНИЯ
+                    PenetrationDamage = FormulasConnector.GetPenetrationDamage(InputAttackModule, GetType());
                     InputAttackModule.DamageValue -= PenetrationDamage;//Пока вычтем этот дамаг из расчёта он в любом случае идёт дальше
                 }            
             switch (InputAttackModule.ProccesingType)

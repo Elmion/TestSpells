@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Common
 {
-    public enum Keywords
+    public enum SaveStat
     {
-        HalfDamage,
-        Cancel,
-        CancelStatus
+        Will,
+        Endurance,
+        Reflex
     }
 }

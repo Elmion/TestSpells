@@ -6,30 +6,44 @@ using System.Threading.Tasks;
 using Common;
 namespace CharapterCards
 {
+
     public class AttackModule
     {
        public ModuleEffectTypes ProccesingType { get; set; }
 
-       public Dictionary<Type,object> Penetrations;///Словарик для игнорирования какой то частю урона указаной секции ResurcePipe
+       public Dictionary<ResurceBlocks, object> Penetrations;///Словарик для игнорирования какой то частю урона указаной секции ResurcePipe
 
        public float DamageValue;
 
-       public float ManaCost;
+       public float StaminaCost;
 
        public string[] KeyWords { get; set; }
-
-        public Dictionary<string> DamageSaveStat; 
-
-        public Dictionary<ResistEnum,float> CreateResistPenetration
-        {
-
-        }
-
-        public Dictionary<StatusEnum,float> CreateStatusPenetration
-        {
-
-        }
         
+       public Dictionary<ResistEnum, float> ResistPenetration; //Срезка резистов  нужный резист 
+
+       public List<StatusApplyItem> ;//Что пытаемся наложить -> его 
+       public Dictionary<SaveStat, Func<AttackModule,AttackModule>> SaveApply; //Если сейф прошёл изменяем входящий модуль дамага;
+
+       public List<ResurceBlocks> IngnoreBlocks;
+    }
+
+    public class StatusApplyItem
+    {
+        StatusEnum TryApply;
+        Dictionary<SaveStat,float> MakeSaveBy; //сейв и дамаг по этому сейву
+
+    }
+    public class StatusApply : List<StatusApplyItem>
+    {
+        public StatusApply() : base()
+        {
+            
+        }
+        public StatusApplyItem this[StatusEnum ]
+        {
+
+        }
+
     }
 
     public enum ModuleEffectTypes
@@ -39,4 +53,5 @@ namespace CharapterCards
         WithoutDamage,
         AfterBufferShild
     }
+
 }

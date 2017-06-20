@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Common
 {
-    public enum Keywords
+    public enum  ResurceBlocks
     {
-        HalfDamage,
-        Cancel,
-        CancelStatus
+        Health,
+        Shield,
+        Resist
     }
 }

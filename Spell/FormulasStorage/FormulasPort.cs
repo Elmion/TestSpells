@@ -10,9 +10,11 @@ namespace FormulasStorage
 {
    public class FormulasPort
     {
-       public static void Initialize(BaseCharapter  bc)
+        public static void Initialize(BaseCharapter  bc)
         {
             FormulasConnector.MaxBaseHealth = Formula.GetMaxBaseHealth;
+            FormulasConnector.GetPenetrationDamage = Formula.GetPenetrationDamage;
         }
+
     }
 }

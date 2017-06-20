@@ -9,5 +9,8 @@ namespace CharapterCards
     public class FormulasConnector
     {
         public static Func<CharapterCard, float> MaxBaseHealth;
+        public static Func<AttackModule,Type, float> GetPenetrationDamage;
+
     }
 }
+
