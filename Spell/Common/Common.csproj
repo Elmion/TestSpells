@@ -46,6 +46,7 @@
     <Compile Include="ResurceBlocks.cs" />
     <Compile Include="SaveStat.cs" />
     <Compile Include="StatusEnum.cs" />
+    <Compile Include="TypeResurces.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

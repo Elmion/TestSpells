@@ -10,29 +10,26 @@ namespace CharapterCards
     {
         string Name;
         public  Dictionary<string, Feature> Features;
-        public  BaseResurce Health;
-        public  BaseResurce Stamina;
+        public  Dictionary<string, BaseResurce> Resurces;
 
         public CharapterCard()
         {
-            Features = new Dictionary<string, Feature>();
-            Health = new BaseResurce(this);
-            Stamina = new BaseResurce(this);
-            List<BaseResurce> SaveList = new List<BaseResurce>()
-            {
-                new BaseResurce(this),//Воля
-                new BaseResurce(this),//Стойкость
-                new BaseResurce(this) //Рефлексы
-            };
+            Features  = new Dictionary<string, Feature>();
+            Resurces =  new Dictionary<string, BaseResurce>();
         }
         public void Init()
         {
             //CharapterHealth.Reset();
         }
         //Добавляет характеристику в класс в класс
-        internal void AddFeature(string Name , Feature feature)
+        internal void AddFeature(string Name)
         {
-            Features.Add(Name, feature);
+            Features.Add(Name, new Feature(0));
+        }
+        internal void AddResurce(string Name)
+        {
+            if(!Resurces.Keys.Contains(Name))
+                     Resurces.Add(Name, new BaseResurce(this));
         }
         internal bool hasSpellEffect(string nameSpell)
         {

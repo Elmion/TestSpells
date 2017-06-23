@@ -9,8 +9,8 @@ namespace CharapterCards
 
     public class AttackModule
     {
-       public ModuleEffectTypes ProccesingType { get; set; }
-
+       public string  NameDamageResurce { get; set; }
+        
        public Dictionary<ResurceBlocks, object> Penetrations;///Словарик для игнорирования какой то частю урона указаной секции ResurcePipe
 
        public float DamageValue;
@@ -21,7 +21,7 @@ namespace CharapterCards
         
        public Dictionary<ResistEnum, float> ResistPenetration; //Срезка резистов  нужный резист 
 
-       public List<StatusApplyItem> ;//Что пытаемся наложить -> его 
+       public List<StatusApplyItem> TryStatusApply;//Что пытаемся наложить -> его 
        public Dictionary<SaveStat, Func<AttackModule,AttackModule>> SaveApply; //Если сейф прошёл изменяем входящий модуль дамага;
 
        public List<ResurceBlocks> IngnoreBlocks;
@@ -31,26 +31,20 @@ namespace CharapterCards
     {
         StatusEnum TryApply;
         Dictionary<SaveStat,float> MakeSaveBy; //сейв и дамаг по этому сейву
-
+        Func<Keywords, AttackModule, AttackModule> SaveOK;
+        Func<Keywords, AttackModule, AttackModule> SaveFail;
     }
     public class StatusApply : List<StatusApplyItem>
     {
-        public StatusApply() : base()
-        {
-            
-        }
-        public StatusApplyItem this[StatusEnum ]
-        {
-
-        }
 
     }
 
-    public enum ModuleEffectTypes
+    public enum DamagedResurce
     {
-        Damage,
-        Restore,
-        WithoutDamage,
+        Common,
+        Will,
+        ,
+        ,
         AfterBufferShild
     }
 
