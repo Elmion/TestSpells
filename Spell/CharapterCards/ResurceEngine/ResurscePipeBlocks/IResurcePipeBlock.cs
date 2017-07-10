@@ -8,12 +8,10 @@ namespace CharapterCards
 {
     public interface IResurcePipeBlock
     {
-        Keywords[] Tags { get; }
         AttackModule TakeExtarnalEffect(AttackModule InputAttackModule);
         float MaxValue { get; }
-        bool MarkToRemove { get; }
+        bool  MarkToRemove { get; }
         float CurrentValue { get; }
-}
-
-
+        int   SortIndex { get; }
+    }
 }

@@ -18,22 +18,12 @@ namespace CharapterCards
             this.card = card;
             PipeBlocks = new List<KeyValuePair<string, IResurcePipeBlock>>();
         }
-        public void TakeExtarnalEffect(AttackModule InputAttackModule)
+        public AttackModule TakeAttackModule(AttackModule InputAttackModule)
         {
-            switch(InputAttackModule.ProccesingType)
+            //проходим через все блоки
+            for (int i = 0; i < PipeBlocks.Count; i++)
             {
-                case ModuleEffectTypes.Damage:
-                case ModuleEffectTypes.Restore:
-                    // Проходим пайп в обратном порядке подкюченных модулей
-                    for (int i = PipeBlocks.Count-1; i >= 0; i--)
-                    {
-                        InputAttackModule = PipeBlocks[i].Value.TakeExtarnalEffect(InputAttackModule);
-                    }
-                    break;
-                case ModuleEffectTypes.WithoutDamage:
-                    break;
-                case ModuleEffectTypes.AfterBufferShild:
-                    break;
+                InputAttackModule = PipeBlocks[i].Value.TakeExtarnalEffect(InputAttackModule);
             }
             //После проверям блоки на изжившие себя и удаляем 
             for (int i = 0; i< PipeBlocks.Count; i++)
@@ -44,6 +34,7 @@ namespace CharapterCards
                     i--;
                 }
             }
+            return InputAttackModule;
         }
         public void Upgarde()
         {

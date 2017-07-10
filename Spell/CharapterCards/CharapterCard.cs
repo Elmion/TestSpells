@@ -15,11 +15,15 @@ namespace CharapterCards
         public CharapterCard()
         {
             Features  = new Dictionary<string, Feature>();
-            Resurces =  new Dictionary<string, BaseResurce>();
+            Resurces =  new Dictionary<string, BaseResurce>();      
         }
         public void Init()
         {
             //CharapterHealth.Reset();
+        }
+        public void IncomingAttackModule(AttackModule module)
+        {
+            Resurces[module.AttackedBaseResurceName].TakeAttackModule(module);
         }
         //Добавляет характеристику в класс в класс
         internal void AddFeature(string Name)

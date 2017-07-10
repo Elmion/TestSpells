@@ -46,7 +46,6 @@
     <Compile Include="Features\Feature.cs" />
     <Compile Include="ResurceEngine\AttackModule.cs" />
     <Compile Include="ResurceEngine\BaseResurce.cs" />
-    <Compile Include="ResurceEngine\ResurscePipeBlocks\BaseHealth.cs" />
     <Compile Include="ResurceEngine\ResurscePipeBlocks\BaseShield.cs" />
     <Compile Include="ResurceEngine\ResurscePipeBlocks\IResurcePipeBlock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

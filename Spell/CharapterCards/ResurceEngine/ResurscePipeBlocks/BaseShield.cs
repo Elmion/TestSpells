@@ -8,16 +8,8 @@ namespace CharapterCards
 {
     public class BaseShield : IResurcePipeBlock
     {
-        public Keywords[] Tags
-        { 
-            get 
-                {
-                 return new Keywords[] { Keywords.Shield };
-                }
-
-        }
         public float MaxValue { get; set; }
-        public bool MarkToRemove
+        public bool  MarkToRemove
             {
                 get
                 {
@@ -36,8 +28,11 @@ namespace CharapterCards
             this.CurrentValue = this.MaxValue = MaxValue;
             Owner = ShiedOwner;
         }
+
         public AttackModule TakeExtarnalEffect(AttackModule InputAttackModule)
         {
+
+
             //Для начала отделим пробивший щит дамаг который пойдёт дальше
             float PenetrationDamage = 0f;
             if(InputAttackModule.Penetrations.ContainsKey(GetType()) && InputAttackModule.ProccesingType != ModuleEffectTypes.Restore)//Если есть такое пробивание и заклинание не востанавливающее
