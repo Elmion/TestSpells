@@ -19,7 +19,7 @@ namespace CharapterCards
                 case "BaseShield":
                     {
                         if(arg.Length == 1)
-                            return new BaseShield(card, (float)arg[0]);
+                            return new BaseShield(card,3, (float)arg[0]);
                         return null;
                     }
                 default:

@@ -49,6 +49,10 @@
       <Project>{c150fbe9-c77d-49fd-b05b-570c194e771d}</Project>
       <Name>CharapterCards</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{9f7bccf4-7991-4243-9c82-48a58f7c19ec}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SpellCore\SpellCore.csproj">
       <Project>{a74e1345-77fa-48e1-8f94-3fe1b721cfea}</Project>
       <Name>SpellCore</Name>

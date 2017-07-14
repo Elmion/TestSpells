@@ -22,7 +22,6 @@ namespace CharapterCards
        //Дополнительные опции которые могут содержать доп значения (Вроде игнорирования блоков)
        //Данные о прохождении блоков.каждый блок будет искать здесь нужные ему данные по ключевым словам
        public Dictionary<Keywords,object> Data { get; set; }
-
        //Дополнительные функции, которые могут использовать специфические блоки
        public Dictionary<Keywords,Func<object[],object>> ActionsChecks { get; set; } 
 

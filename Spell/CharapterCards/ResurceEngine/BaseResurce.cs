@@ -49,7 +49,7 @@ namespace CharapterCards
             }
             else
             {
-                int index = PipeBlocks.FindLastIndex(x => x.Value.Tags.Contains(OUT.Tags[0]));//ТУТ НУЖНО ЕЩЁ ПОДУМАТЬ КАК ИСКАТЬ ИНДЕКС В КОТОРЫЙ НУЖНО ВСТАВИТЬ НОВЫЙ БЛОК
+                int index = PipeBlocks.FindLastIndex(x => x.Value.nameBlock == nameBlock);//ТУТ НУЖНО ЕЩЁ ПОДУМАТЬ КАК ИСКАТЬ ИНДЕКС В КОТОРЫЙ НУЖНО ВСТАВИТЬ НОВЫЙ БЛОК
                 if (index != -1 && index != PipeBlocks.Count - 1)
                 {
                         PipeBlocks.Insert(index + 1, new KeyValuePair<string, IResurcePipeBlock>(nameBlock, OUT));

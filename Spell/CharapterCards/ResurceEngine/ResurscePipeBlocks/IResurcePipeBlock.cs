@@ -8,6 +8,7 @@ namespace CharapterCards
 {
     public interface IResurcePipeBlock
     {
+        string nameBlock { get; }
         AttackModule TakeExtarnalEffect(AttackModule InputAttackModule);
         float MaxValue { get; }
         bool  MarkToRemove { get; }

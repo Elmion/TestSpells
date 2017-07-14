@@ -10,6 +10,7 @@ namespace Common
     {
         HalfDamage,
         Cancel,
-        CancelStatus
+        CancelStatus,
+        ShieldPenetration
     }
 }

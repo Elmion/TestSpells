@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CharapterCards;
+using Common;
 namespace FormulasStorage
 {
     public class Formula
@@ -16,7 +17,7 @@ namespace FormulasStorage
         //Формула пробивания щита/брони
         public static float GetPenetrationDamage(AttackModule InputAttackModule, Type type)
         {
-            return InputAttackModule.DamageValue * (float)InputAttackModule.Penetrations[GetType()] / 100f;
+            return InputAttackModule.Value * (float)InputAttackModule.Data[Keywords.ShieldPenetration] / 100f;
         }
     }
 }
