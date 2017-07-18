@@ -9,22 +9,22 @@ namespace CharapterCards
     public class BaseShield : IResurcePipeBlock
     {
         public string nameBlock { get { return "BaseShield"; } }
-        public float MaxValue { get { return CurrentValue; }}
-        public bool  MarkToRemove
+        public float MaxValue { get { return CurrentValue; } }
+        public bool MarkToRemove
+        {
+            get
             {
-                get
-                {
-                    if (CurrentValue <= 0) return true;
-                    return false;
-                }
+                if (CurrentValue <= 0) return true;
+                return false;
             }
+        }
         public bool ActiveBlock { get; set; }//Активный ли блок зависит от заклинаний наложеных на персонажа.
         public float CurrentValue { get; set; }
         public int SortIndex { get; set; }
 
         private CharapterCard Owner;
 
-        public BaseShield(CharapterCard ShiedOwner,int index, float ShieldValue)
+        public BaseShield(CharapterCard ShiedOwner, int index, float ShieldValue)
         {
             this.CurrentValue += ShieldValue;
             Owner = ShiedOwner;
@@ -32,17 +32,17 @@ namespace CharapterCards
         }
         public AttackModule TakeExtarnalEffect(AttackModule InputAttackModule)
         {
-           //Для начала отделим пробивший щит дамаг который пойдёт дальше
-           float PenetrationDamage = 0f;
-           if (InputAttackModule.Data.ContainsKey(Keywords.ShieldPenetration) && InputAttackModule.Type == AttackModuleType.Damage)
+            //Для начала отделим пробивший щит дамаг который пойдёт дальше
+            float PenetrationDamage = 0f;
+            if (InputAttackModule.Data.ContainsKey(Keywords.ShieldPenetration) && InputAttackModule.Type == AttackModuleType.Damage)
             {
-                    //ФОРМУЛА ПРОБИВАНИЯ
-                    PenetrationDamage = FormulasConnector.GetPenetrationDamage(InputAttackModule, GetType());
-                    InputAttackModule.Value -= PenetrationDamage;//Пока вычтем этот дамаг из расчёта он в любом случае идёт дальше
+                //ФОРМУЛА ПРОБИВАНИЯ
+                PenetrationDamage = FormulasConnector.GetPenetrationDamage(InputAttackModule, GetType());
+                InputAttackModule.Value -= PenetrationDamage;//Пока вычтем этот дамаг из расчёта он в любом случае идёт дальше
             }
-           switch (InputAttackModule.Type)
+            switch (InputAttackModule.Type)
             {
-                
+
                 case AttackModuleType.Damage:
                     if (CurrentValue - InputAttackModule.Value > 0)
                     {

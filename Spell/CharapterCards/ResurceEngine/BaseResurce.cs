@@ -18,6 +18,15 @@ namespace CharapterCards
             this.card = card;
             PipeBlocks = new List<KeyValuePair<string, IResurcePipeBlock>>();
         }
+        public IResurcePipeBlock this[string nameBlock]
+        {
+            get
+                {
+                  int index = PipeBlocks.FindIndex(x => x.Key == nameBlock);
+                  if (index != -1) return PipeBlocks[index].Value;
+                  return null;
+                }
+        }
         public AttackModule TakeAttackModule(AttackModule InputAttackModule)
         {
             //проходим через все блоки
@@ -59,6 +68,8 @@ namespace CharapterCards
                         PipeBlocks.Add( new KeyValuePair<string, IResurcePipeBlock>(nameBlock, OUT));
                 }
             }
+            PipeBlocks.Sort((x, y) =>  x.Value.SortIndex.CompareTo(y.Value.SortIndex));
+            PipeBlocks.Reverse();
             return OUT;
         }
         public void RemoveBlock(IResurcePipeBlock removedBlock)

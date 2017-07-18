@@ -14,7 +14,7 @@ namespace CharapterCards
             {
                 case "BaseHealth":
                     {
-                            return new BaseHealth(card);
+                            return new BaseHealth(card,0);
                     }
                 case "BaseShield":
                     {

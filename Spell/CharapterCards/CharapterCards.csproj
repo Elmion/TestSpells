@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ResurceEngine\ResurscePipeBlocks\BaseHealth.cs" />
     <Compile Include="ResurceEngine\ResurscePipeBlocks\PipeBlockFabric.cs" />
     <Compile Include="FormulasConnector.cs" />
     <Compile Include="CharapterCard.cs" />

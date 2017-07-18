@@ -7,18 +7,13 @@ using Common;
 
 namespace CharapterCards
 {
-    class Resist : IResurcePipeBlock
+    class PhisicResist : IResurcePipeBlock
     {
 
-        public Keywords[] Tags
-        {
-            get
-            {
-                return new Keywords[] { Keywords.Resist };
-            }
-        }
-        public bool MarkToRemove  { get { return false; }}//Неудаляемый блок
+        public string nameBlock { get; }
         public float CurrentValue { get; set; }
+        public int SortIndex { get; }
+        public bool MarkToRemove { get { return false; } }//Неудаляемый блок
         public float MaxValue
         {
             get
@@ -30,41 +25,17 @@ namespace CharapterCards
         private CharapterCard Owner;
         private Dictionary<ResistEnum, float> ListResist;
 
-        public Resist(CharapterCard ItemOwner)
+        public PhisicResist(CharapterCard ItemOwner, float startValue)
         {
             Owner = ItemOwner;
-            ListResist = new Dictionary<ResistEnum, float>();
-            foreach (ResistEnum item in Enum.GetValues(typeof(ResistEnum))) ListResist.Add(item, 0); //Добавили все сопротивления с нулевыми значениями
+            CurrentValue = startValue;
         }
+
         public AttackModule TakeExtarnalEffect(AttackModule InputAttackModule)
         {
-            switch (InputAttackModule.ProccesingType)
+            if(InputAttackModule.Data.ContainsKey(Keywords.PhisicDamage)) //если это физический урон
             {
-                case ModuleEffectTypes.Damage:
-                    if (CurrentValue - InputAttackModule.DamageValue > 0)
-                    {
-                        CurrentValue -= InputAttackModule.DamageValue;
-                        InputAttackModule.DamageValue = 0;
-                    }
-                    else
-                    {
-                        float valueOut = InputAttackModule.DamageValue - CurrentValue;
-                        CurrentValue = 0;
-                        InputAttackModule.DamageValue = valueOut;
-                    }
-                    break;
-                case ModuleEffectTypes.Restore:
-                    float buffMaxValue = MaxValue; //буфферизируем чтоб не гонять
-                    float Missing = buffMaxValue - CurrentValue;
-                    if (Missing != 0)
-                    {
-                        CurrentValue += InputAttackModule.DamageValue;
-                        if (CurrentValue > buffMaxValue)
-                            InputAttackModule.DamageValue = CurrentValue - buffMaxValue;
-                        else
-                            InputAttackModule.DamageValue = 0;
-                    }
-                    break;
+                InputAttackModule.Value = InputAttackModule.Value*(1 - CurrentValue) / MaxValue;//срезали урон
             }
             return InputAttackModule;
         }

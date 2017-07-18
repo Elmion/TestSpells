@@ -13,19 +13,30 @@ namespace SpellTest
             SpellCore.CharapterSystem.BaseCharapter b = new SpellCore.CharapterSystem.BaseCharapter(typeof(int));
             FormulasPort.Initialize(b);
             b.Card.Features.Add("Vitality",new CharapterCards.Feature(10));
-            b.Card.Health.AddBlock("BaseHealth");
-            b.Card.Health.AddBlock("BaseShield",10f);
-            b.Card.Health.AddBlock("BaseHealth");
-            AttackModule a = new AttackModule();
-            a.ProccesingType = ModuleEffectTypes.Damage;
-            a.DamageValue = 100;
-            b.Card.Health.TakeExtarnalEffect(a);
-            b.Card.Health.AddBlock("BaseShield", 110f);
-            a = new AttackModule();
-            a.ProccesingType = ModuleEffectTypes.Damage;
-            a.DamageValue = 100;
-            b.Card.Health.TakeExtarnalEffect(a);
-            b.Card.Health.AddBlock("BaseShield", 110f);
+            //создали ресурс
+            b.Card.AddResurce("Health");
+            //создали 2 блока в нем ХП (1000 из виталити) и щит на 10 едениц
+            b.Card.Resurces["Health"].AddBlock("BaseHealth");
+            b.Card.Resurces["Health"].AddBlock("BaseShield",10f);
+           
+            //атака на 100 едениц
+            AttackModule a = new AttackModule("Health");
+            a.Type = AttackModuleType.Damage;
+            a.Value = 100;
+            b.Card.IncomingAttackModule(a);
+
+            Assert.AreEqual(910f, b.Card.Resurces["Health"]["BaseHealth"].CurrentValue);
+
+            //добавляем щит на 110 поинтов
+            b.Card.Resurces["Health"].AddBlock("BaseShield", 110f);
+            a = new AttackModule("Health");
+            a.Type = AttackModuleType.Damage;
+            a.Value = 100;
+            b.Card.IncomingAttackModule(a);
+
+            Assert.AreEqual(910f, b.Card.Resurces["Health"]["BaseHealth"].CurrentValue);
+            Assert.AreEqual(10f, b.Card.Resurces["Health"]["BaseShield"].CurrentValue);
+
         }
         [TestMethod]
         public void AttackHP100()

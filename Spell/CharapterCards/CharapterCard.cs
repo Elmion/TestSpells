@@ -30,7 +30,7 @@ namespace CharapterCards
         {
             Features.Add(Name, new Feature(0));
         }
-        internal void AddResurce(string Name)
+        public void AddResurce(string Name)
         {
             if(!Resurces.Keys.Contains(Name))
                      Resurces.Add(Name, new BaseResurce(this));

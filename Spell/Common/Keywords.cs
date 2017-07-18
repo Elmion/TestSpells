@@ -11,6 +11,7 @@ namespace Common
         HalfDamage,
         Cancel,
         CancelStatus,
-        ShieldPenetration
+        ShieldPenetration,
+        PhisicDamage
     }
 }

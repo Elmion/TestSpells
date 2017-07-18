@@ -10,9 +10,9 @@ namespace CharapterCards
     public class AttackModule
     {
        //Имя атакуемого ресурса
-       public string AttackedBaseResurceName { get; set; }
+       public string AttackedBaseResurceName { get; private set; }
        //востановление или урон
-       public AttackModuleType Type { get; private set; }
+       public AttackModuleType Type { get;  set; }
        //Количество лечения/урона и т п
        public float Value;
        //Стоимость расхода ресурса.
@@ -54,6 +54,15 @@ namespace CharapterCards
         {
 
         }
+        public AttackModule(string AttackedResurseName)
+        {
+            AttackedBaseResurceName = AttackedResurseName;
+            Type = AttackModuleType.Damage;
+            Value = 0;
+            Data = new Dictionary<Keywords, object>();
+            ActionsChecks = new Dictionary<Keywords, Func<object[], object>>();
+        }
+
     }
     public enum AttackModuleType
     {
