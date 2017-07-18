@@ -7,7 +7,7 @@ using Common;
 
 namespace CharapterCards
 {
-    class PhisicResist : IResurcePipeBlock
+    class Resist : IResurcePipeBlock
     {
 
         public string nameBlock { get; }
@@ -21,34 +21,24 @@ namespace CharapterCards
                 return 100f;//Максимальное сопротивление
             }
         }
-
+        public Keywords ResistName { get; set; }
         private CharapterCard Owner;
         private Dictionary<ResistEnum, float> ListResist;
 
-        public PhisicResist(CharapterCard ItemOwner, float startValue)
+        public Resist(CharapterCard ItemOwner,Keywords ResistName, float startValue)
         {
             Owner = ItemOwner;
             CurrentValue = startValue;
+            this.ResistName = ResistName;
         }
 
         public AttackModule TakeExtarnalEffect(AttackModule InputAttackModule)
         {
-            if(InputAttackModule.Data.ContainsKey(Keywords.PhisicDamage)) //если это физический урон
+            if(InputAttackModule.Data.ContainsKey(ResistName)) //если это физический урон
             {
                 InputAttackModule.Value = InputAttackModule.Value*(1 - CurrentValue) / MaxValue;//срезали урон
             }
             return InputAttackModule;
-        }
-        public float this[ResistEnum typeResist]
-        {
-            get
-            {
-                return ListResist[typeResist];
-            }
-            set
-            {
-                ListResist[typeResist] = value;
-            }
         }
         public void Update()
         {
