@@ -21,6 +21,9 @@ namespace MouseHeart
             t.Interval = 1;
             t.Tick += T_Tick;
             t.Start();
+            СalculationFormula f = new СalculationFormula();
+            FormulaTreeNode tn;
+            f.TryParse("(a*c+((d*c)+g))+r-j+ (s*d)",out tn);
         }
         private void T_Tick(object sender, EventArgs e)
         {

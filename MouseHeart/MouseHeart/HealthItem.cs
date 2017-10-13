@@ -8,11 +8,12 @@ namespace MouseHeart
 {
     class HealthItem
     {
+        СalculationFormula Formula;
         public float CurrentLevel { get; set; }
 
         public void Update()
         {
-
+            CurrentLevel = Formula.Calculation();
         }
         public float GetStatus()
         {

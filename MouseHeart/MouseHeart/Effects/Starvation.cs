@@ -17,7 +17,6 @@ namespace MouseHeart.Effects
             if (selfMouse.Hangry.CurrentLevel >= 80)
             {
                 //Cытая мышка прибавляет в стамине
-
             }
             if(selfMouse.Hangry.CurrentLevel < 80 && selfMouse.Hangry.CurrentLevel < 50)
             {
