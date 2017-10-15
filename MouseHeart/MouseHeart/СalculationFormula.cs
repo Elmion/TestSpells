@@ -1,166 +1,203 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
+
 namespace MouseHeart
 {
     internal class СalculationFormula
     {
-        List<Сoefficient> Coefficients;
+        List<Coefficient> Coefficients;
 
         internal float Calculation()
         {
             throw new NotImplementedException();
         }
-        public bool TryParse(string ParsedString,out FormulaTreeNode ftn)
+        public bool TryParse(string ParsedString)
         {
-            ftn = new FormulaTreeNode();
-            List<Deep> r =  SplitForLogicalBlock(ParsedString);
+            List<Token> r = LexicAnalysis(ParsedString);
+
+
            string[] s =  ParsedString.Split(new char[] { '(' },StringSplitOptions.RemoveEmptyEntries);
             return true;
         }
-
-        List<Deep> SplitForLogicalBlock(string input)
+        public List<Token> LexicAnalysis(string inputString)
         {
-            List<Deep> d = new List<Deep>();
-            int CuplesDeepCount = 0;
-            int maxDeep = 0;
-            Stack<int> indexStartCulpe = new Stack<int>();
-
-            for (int i = 0; i < input.Length; i++)
+            
+            List<Token> tokens = new List<Token>();
+            int i = 0;
+            while( i < inputString.Length)
             {
-                if (input[i] == '(')
+                Token t = new Token();
+                int charCode = inputString[i];
+                StringBuilder buff = new StringBuilder();
+                //обрабатываем цифры
+                while (((charCode >= 48 && charCode <= 57) || charCode == 46|| charCode == 44 ))//добавляем пока не закончились цифры
                 {
-                    indexStartCulpe.Push(i);
-                    CuplesDeepCount++;
+                    buff.Append(inputString[i]);
+                    if (i + 1 < inputString.Length)
+                        charCode = inputString[++i];
+                    else
+                        break;
                 }
-                if (input[i] == ')')
+                if(buff.Length >0)
                 {
-                    CuplesDeepCount--;
+                    float buffValue;
 
-                    Deep deep = new Deep() { id = Guid.NewGuid().ToString().Replace("-", string.Empty),
-                                             Depper = CuplesDeepCount,
-                                             ss = input.Substring(indexStartCulpe.Peek(), i - indexStartCulpe.Pop() + 1) };
-                    d.Add(deep);
-                    if(deep.Depper > maxDeep) maxDeep = x.Depper;
+                    if(float.TryParse(buff.ToString().Replace('.',','), out buffValue))
+                    {
+                        t.Value = buffValue;
+                        t.operation = FormulaOperation.Const;
+                        tokens.Add(t);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Ошибка при обработке  числа");
+                    }
                 }
+
+                //Обрабатываем буквы
+                buff.Clear();
+                while ((charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122))//добавляем пока не закончились цифры
+                {
+                    buff.Append(inputString[i]);
+                    if (i + 1 < inputString.Length)
+                        charCode = inputString[++i];
+                    else
+                        break;
+                }
+                if (buff.Length > 0)
+                {
+                    t.operation = FormulaOperation.Varible;
+                    t.Value = buff.ToString();
+                    tokens.Add(t);
+
+                    continue;
+                }
+
+                switch (charCode)
+                {
+                    case 40:
+                        {
+                            t.operation = FormulaOperation.OpeningParenthesis;
+                            t.Value = 40;
+                            break;
+                        }
+                    case 41:
+                        {
+                            t.operation = FormulaOperation.ClosingParenthesis;
+                            t.Value = 41;
+                            break;
+                        }
+                    case 42:
+                        {
+                            t.operation = FormulaOperation.Multi;
+                            t.Value = 42;
+                            break;
+                        }
+                    case 43:
+                        {
+                            t.operation = FormulaOperation.Plus;
+                            t.Value = 43;
+                            break;
+                        }
+                    case 45:
+                        {
+                            t.operation = FormulaOperation.Minus;
+                            t.Value = 45;
+                            break;
+                        }
+                    case 47:
+                        {
+                            t.operation = FormulaOperation.Div;
+                            t.Value = 47;
+                            break;
+                        }
+                }
+                if (t.Value != null && t.operation != FormulaOperation.Const) tokens.Add(t);
+                i++;
             }
-          
-            for (int i = 0; i < maxDeep; i++)
+            return tokens;
+        }
+
+        public List<MathOperation> GetFormula(List<Token> inputList)
+        {
+            List<MathOperation> operations = new List<MathOperation>();
+            Stack<Token> OpStack = new Stack<Token>();
+            Stack<Token> NumStack = new Stack<Token>();
+
+            for (int i = 0; i < inputList.Count; i++)
             {
-               
+
+
 
 
             }
-            return d;
-        }
-        class Deep
-        {
-           public  string id;
-           public  int Depper;
-           public  string ss;
-        }
-    }
-    internal class FormulaTreeNode
-    {
-        FormulaOperation Operation;
-        Сoefficient Value;
-        FormulaTreeNode left;
-        FormulaTreeNode right;
 
-        public FormulaTreeNode()
-        {
-            Operation = FormulaOperation.None;
-            Value = null;
-            left = null;
-            right = null;
+            return operations;
         }
-
-        public float GetValue()
+   
+        private int Priority(FormulaOperation op)
         {
-            if (left == null || right == null) return Value.Value;
-            switch (Operation)
+            int OUT = 0;
+            switch (op)
             {
+                case FormulaOperation.OpeningParenthesis:
+                    OUT = 6;
+                    break;
+                case FormulaOperation.ClosingParenthesis:
+                    OUT = 6;
+                    break;
                 case FormulaOperation.Plus:
-                    return  left.GetValue() + right.GetValue();
+                    OUT = 2;
+                    break;
                 case FormulaOperation.Minus:
-                    return left.GetValue() - right.GetValue();
+                    OUT = 2;
+                    break;
                 case FormulaOperation.Div:
-                    return left.GetValue() / right.GetValue();
+                    OUT = 4;
+                    break;
                 case FormulaOperation.Multi:
-                    return left.GetValue() * right.GetValue();
+                    OUT = 4;
+                    break;
             }
-            return 0;
+            return OUT;
         }
-        public void  SetLeft(Сoefficient co)
+        public class Token
         {
-            left = new FormulaTreeNode();
-            left.Value = co;
+           public FormulaOperation operation { get; set; }
+           public  object Value { get; set; }
         }
-        public void SetLeft(FormulaOperation op)
+        
+        public class MathOperation
         {
-            left = new FormulaTreeNode();
-            left.Operation = op;
-        }
-        public void SetRight(Сoefficient co)
-        {
-            right = new FormulaTreeNode();
-            right.Value = co;
-        }
-        public void SetRight(FormulaOperation op)
-        {
-            right = new FormulaTreeNode();
-            right.Operation = op;
-        }
-        public bool ChangeСoefficient(string name, Сoefficient co)
-        {
-            bool ok = false;
-            if (Value.Name == name)
+            Coefficient a;
+            FormulaOperation operation;
+            public MathOperation(ref Coefficient a,ref Coefficient b, FormulaOperation operation)
             {
-                Value = co;
-                ok = true;
+                this.a = a;
+                this.b = b;
+                this.operation = operation;
             }
-            else
+            public float Calc()
             {
 
-                if (left != null)
-                {
-                    ok = left.ChangeСoefficient(name, co);
-                }
-                if ( !ok && right != null)
-                {
-                    ok = left.ChangeСoefficient(name, co);
-                }
-                
             }
-            return ok;
         }
-        public bool ChangeСoefficient(Guid id, Сoefficient co)
+        public interface Calculation
         {
-            bool ok = false;
-            if (Value.id == id)
-            {
-                Value = co;
-                ok = true;
-            }
-            else
-            {
-                if (left != null)
-                {
-                    ok = left.ChangeСoefficient(id, co);
-                }
-                if (!ok && right != null)
-                {
-                    ok = left.ChangeСoefficient(id, co);
-                }
-            }
-            return ok;
+            float Calc();
         }
     }
-    public enum FormulaOperation : sbyte
+
+    public enum FormulaOperation
     {
-        None = 0,
-        Plus = 1,
-        Minus = 2,
-        Div = 3,
-        Multi = 4
+        Const ,
+        Varible ,
+        OpeningParenthesis,
+        ClosingParenthesis ,
+        Plus ,
+        Minus ,
+        Div ,
+        Multi
     }
 }
