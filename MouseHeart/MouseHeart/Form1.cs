@@ -21,8 +21,12 @@ namespace MouseHeart
             t.Interval = 1;
             t.Tick += T_Tick;
             t.Start();
-            СalculationFormula f = new СalculationFormula();
-            f.TryParse("52.213 + (aasd*c+((d*c)+g))+r-j+ (s*d)* 54");
+            Coefficient.Add("x");
+            Coefficient.ListCoefficients["x"].Value = 4;
+            Coefficient.Add("y");
+            Coefficient.ListCoefficients["y"].Value = 8;
+            СalculationFormula f = new СalculationFormula("((2+y/2)/(x+2))");
+            Console.WriteLine(f.Calc());
         }
         private void T_Tick(object sender, EventArgs e)
         {

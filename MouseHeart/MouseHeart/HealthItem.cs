@@ -13,7 +13,7 @@ namespace MouseHeart
 
         public void Update()
         {
-            CurrentLevel = Formula.Calculation();
+           // CurrentLevel = Formula.Calculation();
         }
         public float GetStatus()
         {

@@ -6,21 +6,18 @@ namespace MouseHeart
 {
     internal class СalculationFormula
     {
-        List<Coefficient> Coefficients;
+        private MathOperation formula;
 
-        internal float Calculation()
+        public СalculationFormula(string ParsedString)
         {
-            throw new NotImplementedException();
+            List<Token> lexic = LexicAnalysis(ParsedString);
+            MathOperation formula = GetFormula(lexic);
         }
-        public bool TryParse(string ParsedString)
+        public float Calc()
         {
-            List<Token> r = LexicAnalysis(ParsedString);
-
-
-           string[] s =  ParsedString.Split(new char[] { '(' },StringSplitOptions.RemoveEmptyEntries);
-            return true;
+            return formula.Calc();
         }
-        public List<Token> LexicAnalysis(string inputString)
+        private List<Token> LexicAnalysis(string inputString)
         {
             
             List<Token> tokens = new List<Token>();
@@ -48,6 +45,7 @@ namespace MouseHeart
                         t.Value = buffValue;
                         t.operation = FormulaOperation.Const;
                         tokens.Add(t);
+                        continue;
                     }
                     else
                     {
@@ -56,7 +54,6 @@ namespace MouseHeart
                 }
 
                 //Обрабатываем буквы
-                buff.Clear();
                 while ((charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122))//добавляем пока не закончились цифры
                 {
                     buff.Append(inputString[i]);
@@ -118,86 +115,155 @@ namespace MouseHeart
             }
             return tokens;
         }
-
-        public List<MathOperation> GetFormula(List<Token> inputList)
+        private MathOperation GetFormula(List<Token> inputList)
         {
-            List<MathOperation> operations = new List<MathOperation>();
+            //MathOperation opOut;
             Stack<Token> OpStack = new Stack<Token>();
-            Stack<Token> NumStack = new Stack<Token>();
+            Stack<MathOperation> NumStack = new Stack<MathOperation>();
 
             for (int i = 0; i < inputList.Count; i++)
             {
-
-
-
-
+                switch (inputList[i].operation)
+                {
+                    case FormulaOperation.Varible:
+                        Coefficient.Add((string)inputList[i].Value);
+                        NumStack.Push(new MathOperation(Coefficient.ListCoefficients[(string)inputList[i].Value], FormulaOperation.Varible));
+                        break;
+                    case FormulaOperation.Const:
+                        NumStack.Push(new MathOperation((float)inputList[i].Value, FormulaOperation.Const));
+                        break;
+                    case FormulaOperation.OpeningParenthesis:
+                        OpStack.Push(inputList[i]);
+                        break;
+                    case FormulaOperation.ClosingParenthesis:
+                        while (OpStack.Peek().operation != FormulaOperation.OpeningParenthesis)
+                        {
+                            Token t = OpStack.Pop();
+                            MathOperation op2 = NumStack.Pop();
+                            MathOperation op1 = NumStack.Pop();
+                            NumStack.Push(new MathOperation(op1, op2, t.operation));
+                        }
+                        OpStack.Pop();//Выкинули скобку
+                        break;
+                    case FormulaOperation.Div:
+                    case FormulaOperation.Minus:
+                    case FormulaOperation.Plus:
+                    case FormulaOperation.Multi:
+                        if (Priority(OpStack.Peek().operation) < Priority(inputList[i].operation))
+                        {
+                            OpStack.Push(inputList[i]);
+                        }
+                        else
+                        {
+                            Token t = OpStack.Pop();
+                            OpStack.Push(inputList[i]);
+                            MathOperation op2 = NumStack.Pop();
+                            MathOperation op1 = NumStack.Pop();
+                            NumStack.Push(new MathOperation(op1, op2, t.operation));
+                        }
+                        break;
+                }
             }
 
-            return operations;
+
+            return NumStack.Peek();
         }
-   
         private int Priority(FormulaOperation op)
         {
             int OUT = 0;
             switch (op)
             {
                 case FormulaOperation.OpeningParenthesis:
-                    OUT = 6;
+                    OUT = 1;
                     break;
                 case FormulaOperation.ClosingParenthesis:
-                    OUT = 6;
+                    OUT = 1;
                     break;
                 case FormulaOperation.Plus:
-                    OUT = 2;
+                    OUT = 4;
                     break;
                 case FormulaOperation.Minus:
-                    OUT = 2;
+                    OUT = 4;
                     break;
                 case FormulaOperation.Div:
-                    OUT = 4;
+                    OUT = 6;
                     break;
                 case FormulaOperation.Multi:
-                    OUT = 4;
+                    OUT = 6;
                     break;
             }
             return OUT;
         }
-        public class Token
+        private class Token
         {
-           public FormulaOperation operation { get; set; }
-           public  object Value { get; set; }
+            public FormulaOperation operation { get; set; }
+            public object Value { get; set; }
         }
-        
-        public class MathOperation
+        private class MathOperation
         {
-            Coefficient a;
+            object Value;
+            object Value2;
             FormulaOperation operation;
-            public MathOperation(ref Coefficient a,ref Coefficient b, FormulaOperation operation)
+            public MathOperation(Coefficient a, FormulaOperation operation)
             {
-                this.a = a;
-                this.b = b;
-                this.operation = operation;
+                Value = a;
+                this.operation = FormulaOperation.Varible;
+            }
+            public MathOperation(float a, FormulaOperation operation)
+            {
+                Value = a;
+                this.operation = FormulaOperation.Const;
+            }
+            public MathOperation(MathOperation a, MathOperation b, FormulaOperation operation)
+            {
+                switch (operation)
+                {
+                    case FormulaOperation.Plus:
+                    case FormulaOperation.Minus:
+                    case FormulaOperation.Div:
+                    case FormulaOperation.Multi:
+                        Value = a;
+                        Value2 = b;
+                        this.operation = operation;
+                        break;
+
+                }
             }
             public float Calc()
             {
+                switch (operation)
+                {
+                    case FormulaOperation.Const:
+                        return (float)Value;
+                    case FormulaOperation.Varible:
+                        {
+                            return ((Coefficient)Value).Value;
+                        }
+                    case FormulaOperation.Plus:
+                        return ((MathOperation)Value).Calc() + ((MathOperation)Value2).Calc();
+                    case FormulaOperation.Minus:
+                        return ((MathOperation)Value).Calc() - ((MathOperation)Value2).Calc();
+                    case FormulaOperation.Div:
+                        return ((MathOperation)Value).Calc() / ((MathOperation)Value2).Calc();
+                    case FormulaOperation.Multi:
+                        return ((MathOperation)Value).Calc() * ((MathOperation)Value2).Calc();
 
+                }
+                return 0;
             }
         }
-        public interface Calculation
+        private enum FormulaOperation
         {
-            float Calc();
+            Const,
+            Varible,
+            OpeningParenthesis,
+            ClosingParenthesis,
+            Plus,
+            Minus,
+            Div,
+            Multi
         }
     }
 
-    public enum FormulaOperation
-    {
-        Const ,
-        Varible ,
-        OpeningParenthesis,
-        ClosingParenthesis ,
-        Plus ,
-        Minus ,
-        Div ,
-        Multi
-    }
+
 }
