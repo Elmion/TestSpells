@@ -23,6 +23,8 @@ namespace ConsoleApplication1
                                                          0, 0, 0, 0, 0,
                                                          0, 0, 0, 0, 0 };
             Perfocarta card = new Perfocarta();
+            int g = 0;
+            
             while(card.Increment())
             { 
 
@@ -47,8 +49,10 @@ namespace ConsoleApplication1
                 f.card = ConvertPerfocarta(card.card);
                 f.price = CalcAvg(Prices);
                 arr.Add( f);
-
+                Console.SetCursorPosition(0, 0);
+                Console.Write(g++/810000.0f);
             }
+
             int numPositionTop = 0;
             for (int i = 0; i < arr.Count; i++)
             {
