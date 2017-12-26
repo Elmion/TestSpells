@@ -107,6 +107,8 @@ namespace ConsoleApplication1
             }
             return TotalPrice;
         }
+
+
     }
     public class DicRifine
     {
@@ -164,41 +166,46 @@ namespace ConsoleApplication1
         {
             Rifined = true;
         }
-        public int Refine(int typescroll,bool useGems)
+        public int Refine(int typescroll, bool useGems)
         {
             RefineTry++;
-            switch (typescroll)
+            int rn = 0;
+            lock(DicRifine.rnd)
             {
-                //simple
-                case 1:
-                    if (DicRifine.rnd.Next(1, 100) <= property.chance)
-                    {
-                        Rifined = true;
-                        return 1;
-                    }
-                    else
-                    {
-                        if (Stable || useGems) return 0;
-                        Rifined = false;
-                        return -1;
-                    }
-                //bless
-                case 2:
-                    {
-                        if (DicRifine.rnd.Next(1, 100) <= property.chance)
-                        {
-                            Rifined = true;
-                            return DicRifine.rnd.Next(1, 4);
-                        }
-                        else
-                        {
-                            if (Stable || useGems) return 0;
-                            Rifined = false;
-                            return -1;
-                        }
-                    }
-                default: return 0;
+                rn = DicRifine.rnd.Next(1, 100);
             }
+                    switch (typescroll)
+                    {
+                        //simple
+                        case 1:
+                            if (rn <= property.chance)
+                            {
+                                Rifined = true;
+                                return 1;
+                            }
+                            else
+                            {
+                                if (Stable || useGems) return 0;
+                                Rifined = false;
+                                return -1;
+                            }
+                        //bless
+                        case 2:
+                            {
+                                if (rn <= property.chance)
+                                {
+                                    Rifined = true;
+                                    lock (DicRifine.rnd) return DicRifine.rnd.Next(1, 4);
+                                }
+                                else
+                                {
+                                    if (Stable || useGems) return 0;
+                                    Rifined = false;
+                                    return -1;
+                                }
+                            }
+                        default: return 0;
+                    }
         }
     }
     public class RefinePointProperty

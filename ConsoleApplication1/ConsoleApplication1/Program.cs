@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ConsoleApplication1
@@ -9,61 +10,40 @@ namespace ConsoleApplication1
     class Program
     {
         //const int TRYCOUNT = 200000000;
+
+        static List<Task> tasks = new List<Task>();
+        static List<Experiment> arr = new List<Experiment>();
+        static Perfocarta card = new Perfocarta();
+        static CancellationTokenSource cts = new CancellationTokenSource();
+        static TaskFactory factory = new TaskFactory(
+              cts.Token,
+              TaskCreationOptions.PreferFairness,
+              TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Current);
+
         static void Main(string[] args)
         {
-
-            Random r = new Random();
-            List<int> Prices = new List<int>();
-            List<FinishArray> arr = new List<FinishArray>();
             // StatisticPreEchance statistic = new StatisticPreEchance();
-            List<int> perfocarta = new List<int>() { 0, 0, 0, 0, 0,
-                                                         0, 0, 0, 0, 0,
-                                                         0, 0, 0, 0, 0,
-                                                         0, 0, 0, 0, 0,
-                                                         0, 0, 0, 0, 0,
-                                                         0, 0, 0, 0, 0 };
-            Perfocarta card = new Perfocarta();
-            int g = 0;
-            
-            while(card.Increment())
-            { 
-
-                Prices.Clear();
-                int i = 0;
-                while (i < 20)
-                {
-                    
-                    ItemEquipment item = new ItemEquipment();
-                    while (item.CurrentRefine <= 29)
-                    {
-                        item.Refine(card.card[item.CurrentRefine]);
-
-                    }
-                    Prices.Add(item.GetBuildPrice(card.card));
-                    //item.GetReport(perfocarta);
-                    i++;
-                }
-                Prices = Normalize(Prices, 0.02f, 0.98f);
-
-                FinishArray f = new FinishArray();
-                f.card = ConvertPerfocarta(card.card);
-                f.price = CalcAvg(Prices);
-                arr.Add( f);
-                Console.SetCursorPosition(0, 0);
-                Console.Write(g++/810000.0f);
-            }
-
-            int numPositionTop = 0;
-            for (int i = 0; i < arr.Count; i++)
+            bool test;
+            do
             {
-                if (arr[numPositionTop].price < arr[i].price)
-                    numPositionTop = i;
-            }
-            Console.WriteLine("Map:" + arr[numPositionTop].card);
-            Console.WriteLine("Price:" + arr[numPositionTop].price);
+                test = OK();
+                Task.WaitAll(tasks.ToArray());
 
-            Console.ReadKey();
+            } while (test);
+
         }
+        private static  bool OK()
+        {
+            tasks.Clear();
+            for (int i = 0; i < 5; i++)
+            {
+                if (!card.Increment()) return false;
+                arr.Add(new Experiment(card.Copy()));
+                tasks.Add(factory.StartNew(arr[arr.Count-1].Calc));
+            }
+            return true;
+        }
+
 
         private class FinishArray
         {

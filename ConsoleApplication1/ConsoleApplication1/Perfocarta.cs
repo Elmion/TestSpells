@@ -19,6 +19,10 @@ namespace ConsoleApplication1
                                                          0, 0, 0, 0, 0,
                                                          0, 0, 0, 0, 0 };
         }
+        public List<int> Copy()
+        {
+            return new List<int>(card);
+        }
         public bool Increment()
         {
                 card[0]++;
