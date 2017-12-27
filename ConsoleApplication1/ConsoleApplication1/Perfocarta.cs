@@ -12,7 +12,7 @@ namespace ConsoleApplication1
         public List<int> card;
         public Perfocarta()
         {
-            card = new List<int>() { 0, 0, 0, 0, 0,
+            card = new List<int>() {                     0, 0, 0, 0, 0,
                                                          0, 0, 0, 0, 0,
                                                          0, 0, 0, 0, 0,
                                                          0, 0, 0, 0, 0,
@@ -25,12 +25,13 @@ namespace ConsoleApplication1
         }
         public bool Increment()
         {
-                card[0]++;
+                card[9]++;
 
-                card = Recurce(card, 0);
-                if (card[29] >= 4)  return false;
+                card = Recurce(card, 9);
+                if (card[20] >= 1)  return false;
                  return true;
         }
+
         List<int> Recurce(List<int> f,int positon)
         {
             if (positon < f.Count - 1)

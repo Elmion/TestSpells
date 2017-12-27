@@ -10,8 +10,10 @@ namespace ConsoleApplication1
     {
         List<RefinePoint> points = new List<RefinePoint>();
         public int CurrentRefine = 0;
-        public ItemEquipment()
+        Random rnd;
+        public ItemEquipment(Random rnd)
         {
+            this.rnd = rnd;
             for (int i = 0; i < 30; i++)
             {
                 points.Add(new RefinePoint(i));
@@ -27,23 +29,23 @@ namespace ConsoleApplication1
             {
                 case 0:
                     {
-                        RefinedBy = points[CurrentRefine].Refine(1, false);
+                        RefinedBy = points[CurrentRefine].Refine(rnd,1, false);
                         break;
                     }
                 case 1:
                     {
-                        RefinedBy = points[CurrentRefine].Refine(1, true);
+                        RefinedBy = points[CurrentRefine].Refine(rnd, 1, true);
                         break;
                     }
                 case 2:
                     {
-                        RefinedBy = points[CurrentRefine].Refine(2, false);
+                        RefinedBy = points[CurrentRefine].Refine(rnd, 2, false);
 
                         break;
                     }
                 case 3:
                     {
-                        RefinedBy = points[CurrentRefine].Refine(2, true);
+                        RefinedBy = points[CurrentRefine].Refine(rnd, 2, true);
                         break;
                     }
                 default:
@@ -166,19 +168,14 @@ namespace ConsoleApplication1
         {
             Rifined = true;
         }
-        public int Refine(int typescroll, bool useGems)
+        public int Refine(Random rnd, int typescroll, bool useGems)
         {
             RefineTry++;
-            int rn = 0;
-            lock(DicRifine.rnd)
-            {
-                rn = DicRifine.rnd.Next(1, 100);
-            }
                     switch (typescroll)
                     {
                         //simple
                         case 1:
-                            if (rn <= property.chance)
+                            if (rnd.Next(1, 100) <= property.chance)
                             {
                                 Rifined = true;
                                 return 1;
@@ -192,10 +189,10 @@ namespace ConsoleApplication1
                         //bless
                         case 2:
                             {
-                                if (rn <= property.chance)
+                                if (rnd.Next(1, 100) <= property.chance)
                                 {
                                     Rifined = true;
-                                    lock (DicRifine.rnd) return DicRifine.rnd.Next(1, 4);
+                                    return rnd.Next(1, 4);
                                 }
                                 else
                                 {

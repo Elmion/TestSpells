@@ -7,31 +7,35 @@ using System.Xml;
 
 namespace ConsoleApplication1
 {
-    class Experiment
+    class Lab
     {
-        private List<int> card;
-        private List<int> Prices;
-        public Experiment(List<int> card)
+        int NumLab;
+        Random rnd;
+        List<int> Prices;
+        List<int> CurrentCard;
+        public Lab(int NumLab)
+        {
+            this.NumLab = NumLab;
+            rnd = new Random((int)DateTime.Now.Ticks + NumLab * 476);
+            Prices = new List<int>();
+        }
+        public void DoExperiment(object card)
+        {
+            CurrentCard = card as List<int>;
+            Prices.Clear();
+            int i = 0;
+            while (i < 3)
             {
-                this.card = new List<int>(card);
-                Prices = new List<int>();
-            }       
-        public void Calc()
-            {
-                int i = 0;
-                while (i < 3)
+
+                ItemEquipment item = new ItemEquipment(rnd);
+                while (item.CurrentRefine <= 29)
                 {
-                    
-                    ItemEquipment item = new ItemEquipment(new Random());
-                    while (item.CurrentRefine <= 29)
-                    {
-                        item.Refine(card[item.CurrentRefine]);
-                    }
-                    Prices.Add(item.GetBuildPrice(card));
-                    //item.GetReport(perfocarta);
-                    i++;
+                    item.Refine(CurrentCard[item.CurrentRefine]);
                 }
+                Prices.Add(item.GetBuildPrice(CurrentCard));
+                i++;
             }
+        }
         public XmlElement GetReport(XmlDocument doc)
         {
             XmlElement elemRoot = doc.CreateElement("Report");
@@ -40,7 +44,7 @@ namespace ConsoleApplication1
             elemRoot.AppendChild(elemCard);
             elemRoot.AppendChild(elemPrice);
 
-            elemCard.InnerXml = ConvertPerfocarta(card);
+            elemCard.InnerXml = ConvertPerfocarta(CurrentCard);
             elemPrice.InnerXml = CalcAvg(Prices).ToString();
             return elemRoot;
         }
@@ -60,8 +64,7 @@ namespace ConsoleApplication1
             {
                 OUT += numbers[i];
             }
-            return (int)( OUT / numbers.Count);
+            return (int)(OUT / numbers.Count);
         }
-
     }
 }

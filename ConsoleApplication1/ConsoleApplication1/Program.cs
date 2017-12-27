@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace ConsoleApplication1
 {
@@ -12,7 +13,7 @@ namespace ConsoleApplication1
         //const int TRYCOUNT = 200000000;
 
         static List<Task> tasks = new List<Task>();
-        static List<Experiment> arr = new List<Experiment>();
+        static List<Lab> Labs = new List<Lab>();
         static Perfocarta card = new Perfocarta();
         static CancellationTokenSource cts = new CancellationTokenSource();
         static TaskFactory factory = new TaskFactory(
@@ -22,52 +23,45 @@ namespace ConsoleApplication1
 
         static void Main(string[] args)
         {
+            XmlDocument doc = new XmlDocument();
+            XmlElement root = doc.CreateElement("root");
+            doc.AppendChild(root);
+
+            for (int i = 0; i < 10; i++)
+            {
+                Labs.Add(new Lab(i));
+            }
+
             // StatisticPreEchance statistic = new StatisticPreEchance();
             bool test;
             do
             {
                 test = OK();
                 Task.WaitAll(tasks.ToArray());
-
+                for (int i = 0; i < 10; i++)
+                 {
+                    root.AppendChild(Labs[i].GetReport(doc));
+                 }
             } while (test);
-
+            doc.WriteTo(XmlWriter.Create("ReportRefine.xml"));
         }
         private static  bool OK()
         {
             tasks.Clear();
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 10; i++)
             {
                 if (!card.Increment()) return false;
-                arr.Add(new Experiment(card.Copy()));
-                tasks.Add(factory.StartNew(arr[arr.Count-1].Calc));
+                tasks.Add(factory.StartNew( Labs[i].DoExperiment, card.Copy()));
             }
             return true;
         }
-
 
         private class FinishArray
         {
            public  string card;
            public  long price;
         }
-        public static string ConvertPerfocarta (List<int> numbers)
-        {
-            string OUT = "";
-            for (int i = 0; i < numbers.Count; i++)
-            {
-                OUT += numbers[i].ToString();
-            }
-            return OUT;
-        }
-        public static long CalcAvg(List<int> numbers)
-        {
-            long OUT = 0;
-            for (int i = 0; i < numbers.Count; i++)
-            {
-                OUT += numbers[i];
-            }
-            return OUT / numbers.Count;
-        }
+
 
         public static List<int> Normalize(List<int> numbers, float MinLimit, float MaxLimit)
         {
