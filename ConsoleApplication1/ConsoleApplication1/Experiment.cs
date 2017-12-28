@@ -9,8 +9,13 @@ namespace ConsoleApplication1
 {
     class Experiment
     {
-        private List<int> card;
-        private List<int> Prices;
+        public List<int> card;
+        public List<int> Prices;
+        public Random rnd;
+        public void SetRandom(Random rnd)
+        {
+            this.rnd = rnd;
+        }
         public Experiment(List<int> card)
             {
                 this.card = new List<int>(card);
@@ -19,10 +24,10 @@ namespace ConsoleApplication1
         public void Calc()
             {
                 int i = 0;
-                while (i < 3)
+                while (i < 1)
                 {
                     
-                    ItemEquipment item = new ItemEquipment(new Random());
+                    ItemEquipment item = new ItemEquipment(rnd);
                     while (item.CurrentRefine <= 29)
                     {
                         item.Refine(card[item.CurrentRefine]);

@@ -11,42 +11,37 @@ namespace ConsoleApplication1
     {
         int NumLab;
         Random rnd;
-        List<int> Prices;
-        List<int> CurrentCard;
-        public Lab(int NumLab)
+        XmlDocument doc;
+        public List<Experiment> CurrentExperements;
+        public List<XmlElement> Reports;
+        public Lab(int NumLab,XmlDocument mainDoc)
         {
             this.NumLab = NumLab;
             rnd = new Random((int)DateTime.Now.Ticks + NumLab * 476);
-            Prices = new List<int>();
+            doc = mainDoc;
         }
-        public void DoExperiment(object card)
+        public void DoExperiments(object experements)
         {
-            CurrentCard = card as List<int>;
-            Prices.Clear();
-            int i = 0;
-            while (i < 3)
+
+            CurrentExperements = experements as List<Experiment>;
+      
+            foreach (var experement in CurrentExperements)
             {
-
-                ItemEquipment item = new ItemEquipment(rnd);
-                while (item.CurrentRefine <= 29)
-                {
-                    item.Refine(CurrentCard[item.CurrentRefine]);
-                }
-                Prices.Add(item.GetBuildPrice(CurrentCard));
-                i++;
+                experement.SetRandom(rnd);
+                experement.Calc();
             }
+           // GenerateReport();
         }
-        public XmlElement GetReport(XmlDocument doc)
+        public void GenerateReport()
         {
-            XmlElement elemRoot = doc.CreateElement("Report");
-            XmlElement elemCard = doc.CreateElement("Card");
-            XmlElement elemPrice = doc.CreateElement("TotalPrice");
-            elemRoot.AppendChild(elemCard);
-            elemRoot.AppendChild(elemPrice);
-
-            elemCard.InnerXml = ConvertPerfocarta(CurrentCard);
-            elemPrice.InnerXml = CalcAvg(Prices).ToString();
-            return elemRoot;
+            Reports = new List<XmlElement>();
+            foreach (var experement in CurrentExperements)
+            {
+                lock(doc)
+                {
+                    Reports.Add(experement.GetReport(doc));
+                }
+            }
         }
         private string ConvertPerfocarta(List<int> numbers)
         {

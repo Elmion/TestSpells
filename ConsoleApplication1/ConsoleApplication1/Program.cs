@@ -15,6 +15,7 @@ namespace ConsoleApplication1
         static List<Task> tasks = new List<Task>();
         static List<Lab> Labs = new List<Lab>();
         static Perfocarta card = new Perfocarta();
+        static List<Experiment> schemes = new List<Experiment>(); 
         static CancellationTokenSource cts = new CancellationTokenSource();
         static TaskFactory factory = new TaskFactory(
               cts.Token,
@@ -23,36 +24,58 @@ namespace ConsoleApplication1
 
         static void Main(string[] args)
         {
+
+            do
+            {
+                schemes.Add(new Experiment(card.card));
+                Console.SetCursorPosition(0, 0);
+                Console.WriteLine("Generate schemas: " + schemes.Count);
+            } while (card.Increment());
+
             XmlDocument doc = new XmlDocument();
             XmlElement root = doc.CreateElement("root");
             doc.AppendChild(root);
 
             for (int i = 0; i < 10; i++)
             {
-                Labs.Add(new Lab(i));
+                Labs.Add(new Lab(i,doc));
             }
-
-            // StatisticPreEchance statistic = new StatisticPreEchance();
-            bool test;
-            do
+            int TotalEcperements = schemes.Count/10;
+            for (int i = 0; i < 10; i++)
             {
-                test = OK();
-                Task.WaitAll(tasks.ToArray());
-                for (int i = 0; i < 10; i++)
-                 {
-                    root.AppendChild(Labs[i].GetReport(doc));
-                 }
-            } while (test);
-            doc.WriteTo(XmlWriter.Create("ReportRefine.xml"));
+                tasks.Add(factory.StartNew(Labs[i].DoExperiments, schemes.GetRange(i* TotalEcperements, TotalEcperements)));
+            }
+            Task.WaitAll(tasks.ToArray());
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    foreach (var report in Labs[i].Reports)
+            //    {
+            //        root.AppendChild(report);
+            //    }
+            //}
+            int numBuild = 0;
+            int NumLab = 0;
+            int maxPrice = int.MaxValue;
+            for (int i = 0; i < Labs.Count; i++)
+            {
+                for (int j = 0; j < Labs[i].CurrentExperements.Count; j++)
+                {
+                    if (maxPrice > Labs[i].CurrentExperements[j].Prices[0])
+                    {
+                        maxPrice = Labs[i].CurrentExperements[j].Prices[0];
+                        numBuild = j;
+                        NumLab = i;
+                    }
+                }
+            }
+            Console.WriteLine(ConvertPerfocarta(Labs[NumLab].CurrentExperements[numBuild].card));
+            Console.WriteLine(maxPrice);
+            Console.ReadLine();
+            //doc.WriteTo(XmlWriter.Create("ReportRefine.xml"));
         }
         private static  bool OK()
         {
-            tasks.Clear();
-            for (int i = 0; i < 10; i++)
-            {
-                if (!card.Increment()) return false;
-                tasks.Add(factory.StartNew( Labs[i].DoExperiment, card.Copy()));
-            }
+
             return true;
         }
 
@@ -89,7 +112,15 @@ namespace ConsoleApplication1
             }
             return OUT;
         }
-        
+        private static string ConvertPerfocarta(List<int> numbers)
+        {
+            string OUT = "";
+            for (int i = 0; i < numbers.Count; i++)
+            {
+                OUT += numbers[i].ToString();
+            }
+            return OUT;
+        }
         //public class StatisticPreEchance
         //{
         //    public List<int> PreLevelTry = new List<int>();
@@ -126,7 +157,7 @@ namespace ConsoleApplication1
         //            if(level != 7 || level != 10 || level !=20)
         //            PreLevelTry[level] += Item.TableRefine[level - 1].scrolls;
         //        }
-                
+
         //        if(type == 4 || type == 3)
         //        {
         //            blessedTotal += Item.TableRefine[level].scrolls;
