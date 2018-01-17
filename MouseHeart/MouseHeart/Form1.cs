@@ -20,13 +20,18 @@ namespace MouseHeart
             mng.Initialize();
             t.Interval = 1;
             t.Tick += T_Tick;
-            t.Start();
-            Coefficient.Add("x");
-            Coefficient.ListCoefficients["x"].Value = 4;
-            Coefficient.Add("y");
-            Coefficient.ListCoefficients["y"].Value = 8;
+           // t.Start();
+            //Coefficient.Add("x");
+            //Coefficient.ListCoefficients["x"].Value = 4;
+            //Coefficient.Add("y");
+            //Coefficient.ListCoefficients["y"].Value = 8;
             СalculationFormula f = new СalculationFormula("((2+y/2)/(x+2))");
             Console.WriteLine(f.Calc());
+
+            using (FormulaEditor form = new FormulaEditor(f))
+            {
+                form.ShowDialog();
+            } 
         }
         private void T_Tick(object sender, EventArgs e)
         {
@@ -34,6 +39,11 @@ namespace MouseHeart
             Console.Clear();
             Console.WriteLine(mng.MouseOrganStatus());
             Console.SetCursorPosition(0, 0);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //
         }
     }
 }

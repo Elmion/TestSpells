@@ -4,19 +4,35 @@ using System.Text;
 
 namespace MouseHeart
 {
-    internal class СalculationFormula
+    public class СalculationFormula
     {
-        private MathOperation formula;
+        public string Name { get; set; }
+        public Dictionary<string, СalculationFormula> Varibles = new Dictionary<string, СalculationFormula>();
+
+        private MathOperation Formula;
+
+
 
         public СalculationFormula(string ParsedString)
         {
             List<Token> lexic = LexicAnalysis(ParsedString);
-            MathOperation formula = GetFormula(lexic);
+            Formula = GetFormula(lexic);
+        }
+        public СalculationFormula(string Name,string ParsedString)
+        {
+            this.Name = Name;
+            List<Token> lexic = LexicAnalysis(ParsedString);
+            Formula = GetFormula(lexic);
+        }
+        public override string ToString()
+        {
+            return base.ToString();
         }
         public float Calc()
         {
-            return formula.Calc();
+            return Formula.Calc();
         }
+
         private List<Token> LexicAnalysis(string inputString)
         {
             
@@ -126,8 +142,8 @@ namespace MouseHeart
                 switch (inputList[i].operation)
                 {
                     case FormulaOperation.Varible:
-                        Coefficient.Add((string)inputList[i].Value);
-                        NumStack.Push(new MathOperation(Coefficient.ListCoefficients[(string)inputList[i].Value], FormulaOperation.Varible));
+                        Varibles.Add((string)inputList[i].Value, new СalculationFormula( FormulaOperation.Varible);
+                        NumStack.Push(new MathOperation(Varibles[(string)inputList[i].Value], FormulaOperation.Varible));
                         break;
                     case FormulaOperation.Const:
                         NumStack.Push(new MathOperation((float)inputList[i].Value, FormulaOperation.Const));
@@ -204,7 +220,7 @@ namespace MouseHeart
             object Value;
             object Value2;
             FormulaOperation operation;
-            public MathOperation(Coefficient a, FormulaOperation operation)
+            public MathOperation(СalculationFormula a, FormulaOperation operation)
             {
                 Value = a;
                 this.operation = FormulaOperation.Varible;
@@ -237,7 +253,7 @@ namespace MouseHeart
                         return (float)Value;
                     case FormulaOperation.Varible:
                         {
-                            return ((Coefficient)Value).Value;
+                            return ((СalculationFormula)Value).Calc();
                         }
                     case FormulaOperation.Plus:
                         return ((MathOperation)Value).Calc() + ((MathOperation)Value2).Calc();
