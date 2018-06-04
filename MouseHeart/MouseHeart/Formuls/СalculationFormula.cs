@@ -8,8 +8,18 @@ namespace MouseHeart
     public class СalculationFormula
     {
         public string Name { get; set; }
-        public Dictionary<string, Varible> Varibles = new Dictionary<string, Varible>();
-
+        public float this[string name]
+        {
+            get
+            {
+                return Varibles[name];
+            }
+            set
+            {
+                 Varibles[name] = value;
+            }
+        }
+        private Dictionary<string, float> Varibles = new Dictionary<string, float>();
         private MathOperation Formula;
 
         public СalculationFormula(string ParsedString)
@@ -141,8 +151,9 @@ namespace MouseHeart
                 switch (inputList[i].operation)
                 {
                     case FormulaOperation.Varible:
-                        //Varibles.Add((string)inputList[i].Value, new СalculationFormula();
-                        NumStack.Push(new MathOperation(Varible.NewVarible((string)inputList[i].Value), FormulaOperation.Varible));
+                        string name = (string)inputList[i].Value;
+                        if (!Varibles.ContainsKey(name)) Varibles.Add(name, 0);
+                        NumStack.Push(new MathOperation(name,this, FormulaOperation.Varible));
                         break;
                     case FormulaOperation.Const:
                         NumStack.Push(new MathOperation((float)inputList[i].Value, FormulaOperation.Const));
@@ -207,125 +218,44 @@ namespace MouseHeart
             }
             return OUT;
         }
-        private class Token
-        {
-            public FormulaOperation operation { get; set; }
-            public object Value { get; set; }
-        }
-        private class MathOperation
-        {
-            object Value;
-            object Value2;
-            FormulaOperation operation;
-            public MathOperation(Varible a, FormulaOperation operation)
-            {
-                Value = a;
-                this.operation = FormulaOperation.Varible;
-            }
-            public MathOperation(float a, FormulaOperation operation)
-            {
-                Value = a;
-                this.operation = FormulaOperation.Const;
-            }
-            public MathOperation(MathOperation a, MathOperation b, FormulaOperation operation)
-            {
-                switch (operation)
-                {
-                    case FormulaOperation.Plus:
-                    case FormulaOperation.Minus:
-                    case FormulaOperation.Div:
-                    case FormulaOperation.Multi:
-                        Value = a;
-                        Value2 = b;
-                        this.operation = operation;
-                        break;
-
-                }
-            }
-            public float Calc()
-            {
-                switch (operation)
-                {
-                    case FormulaOperation.Const:
-                        return (float)Value;
-                    case FormulaOperation.Varible:
-                        {
-                            return ((Varible)Value).Value;
-                        }
-                    case FormulaOperation.Plus:
-                        return ((MathOperation)Value).Calc() + ((MathOperation)Value2).Calc();
-                    case FormulaOperation.Minus:
-                        return ((MathOperation)Value).Calc() - ((MathOperation)Value2).Calc();
-                    case FormulaOperation.Div:
-                        return ((MathOperation)Value).Calc() / ((MathOperation)Value2).Calc();
-                    case FormulaOperation.Multi:
-                        return ((MathOperation)Value).Calc() * ((MathOperation)Value2).Calc();
-
-                }
-                return 0;
-            }
-        }
-        private enum FormulaOperation
-        {
-            Const,
-            Varible,
-            OpeningParenthesis,
-            ClosingParenthesis,
-            Plus,
-            Minus,
-            Div,
-            Multi
-        }
     }
+
+    
     public class Varible
     {
         public static Dictionary<string, Varible> ListVaribles = new Dictionary<string, Varible>();
-        public static Varible NewVarible(string name) 
-        {
-            if (!ListVaribles.ContainsKey(name))
-            {
-                ListVaribles.Add(name, new Varible(0));
-            }
-            return ListVaribles[name];
-        }
+
+        public float Value { get; private set; }
+
         public static void CreateXMLMap()
         {
-           // XmlWriter writer = XmlWriter.Create("VaribleSittings.xml");
             XmlDocument doc = new XmlDocument();
-            XmlElement e = doc.CreateElement("root");
+            XmlElement root = doc.CreateElement("root");
             foreach (string item in ListVaribles.Keys)
             {
-                XmlNode n = doc.CreateElement("varible");
-                XmlAttribute a = doc.CreateAttribute("NameVarible");
-                a.Value = item.ToString();
-                n.InnerText = ListVaribles[item].Value.ToString();
-                n.Attributes.Append(a);
-                e.AppendChild(n);
+                XmlNode varibleNode = doc.CreateElement("varible");
+                XmlAttribute attribute = doc.CreateAttribute("NameVarible");
+                attribute.Value = item.ToString();
+                varibleNode.InnerText = ListVaribles[item].Value.ToString();
+                varibleNode.Attributes.Append(attribute);
+                root.AppendChild(varibleNode);
             }
-            doc.AppendChild(e);
+            doc.AppendChild(root);
             doc.Save("VaribleSettings.xml");
         }
         public static void LoadVaribles()
         {
-               // XmlWriter writer = XmlWriter.Create("VaribleSittings.xml");
-               XmlDocument doc = new XmlDocument();
+            XmlDocument doc = new XmlDocument();
             doc.Load("VaribleSettings.xml");
-            XmlElement e = doc.GetElementById("root");
-            XmlNodeList list = doc.GetElementsByTagName("varible");
-            for (int i = 0; i < list.Count; i++)
+            XmlElement root = doc.GetElementById("root");
+            XmlNodeList listVaribles = doc.GetElementsByTagName("varible");
+            for (int i = 0; i < listVaribles.Count; i++)
             {
-                string temp = list.Item(i).Attributes.Item(0).Value;
-                ListVaribles[temp].Value = float.Parse(list.Item(i).InnerText);
+                string temp = listVaribles.Item(i).Attributes.Item(0).Value;
+                ListVaribles[temp].Value = float.Parse(listVaribles.Item(i).InnerText);
             }
         }
-        public static void SetVarible(string name , float d)
-            {
-                  ListVaribles[name].Value = d;
-            }
 
-        private Varible(float f) { Value = f;}
-        public float Value {get;set;}
-        
     }
 
 

@@ -33,10 +33,17 @@ namespace MouseHeart
             //    form.ShowDialog();
             //}
 
-            Varible.LoadVaribles();
-            var d = Varible.ListVaribles;
+            ////Varible.LoadVaribles();
+            //  var d = Varible.ListVaribles;
+            f["ydf"] = 8;
+            f["xc"] = 1;
+            f["x"] = 1;
             Console.WriteLine(f.Calc());
-
+            f["ydf"] = 3;
+            f["xc"] = 2;
+            f["x"] = 3;
+            
+            Console.WriteLine(f.Calc());
             Console.ReadLine();
         }
         private void T_Tick(object sender, EventArgs e)

@@ -59,18 +59,13 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Effects\HealthEffect.cs" />
-    <Compile Include="FormulaEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormulaEditor.Designer.cs">
-      <DependentUpon>FormulaEditor.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormulsList.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormulsList.Designer.cs">
       <DependentUpon>FormulsList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Formuls\MathOperation.cs" />
     <Compile Include="HealthItem.cs" />
     <Compile Include="Mouse.cs" />
     <Compile Include="Program.cs" />
@@ -78,9 +73,6 @@
     <Compile Include="Formuls\СalculationFormula.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormulaEditor.resx">
-      <DependentUpon>FormulaEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormulsList.resx">
       <DependentUpon>FormulsList.cs</DependentUpon>
