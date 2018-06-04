@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml;
 
 namespace MouseHeart
 {
     public class СalculationFormula
     {
         public string Name { get; set; }
-        public Dictionary<string, СalculationFormula> Varibles = new Dictionary<string, СalculationFormula>();
+        public Dictionary<string, Varible> Varibles = new Dictionary<string, Varible>();
 
         private MathOperation Formula;
-
-
 
         public СalculationFormula(string ParsedString)
         {
@@ -142,8 +141,8 @@ namespace MouseHeart
                 switch (inputList[i].operation)
                 {
                     case FormulaOperation.Varible:
-                        Varibles.Add((string)inputList[i].Value, new СalculationFormula( FormulaOperation.Varible);
-                        NumStack.Push(new MathOperation(Varibles[(string)inputList[i].Value], FormulaOperation.Varible));
+                        //Varibles.Add((string)inputList[i].Value, new СalculationFormula();
+                        NumStack.Push(new MathOperation(Varible.NewVarible((string)inputList[i].Value), FormulaOperation.Varible));
                         break;
                     case FormulaOperation.Const:
                         NumStack.Push(new MathOperation((float)inputList[i].Value, FormulaOperation.Const));
@@ -180,8 +179,6 @@ namespace MouseHeart
                         break;
                 }
             }
-
-
             return NumStack.Peek();
         }
         private int Priority(FormulaOperation op)
@@ -220,7 +217,7 @@ namespace MouseHeart
             object Value;
             object Value2;
             FormulaOperation operation;
-            public MathOperation(СalculationFormula a, FormulaOperation operation)
+            public MathOperation(Varible a, FormulaOperation operation)
             {
                 Value = a;
                 this.operation = FormulaOperation.Varible;
@@ -253,7 +250,7 @@ namespace MouseHeart
                         return (float)Value;
                     case FormulaOperation.Varible:
                         {
-                            return ((СalculationFormula)Value).Calc();
+                            return ((Varible)Value).Value;
                         }
                     case FormulaOperation.Plus:
                         return ((MathOperation)Value).Calc() + ((MathOperation)Value2).Calc();
@@ -279,6 +276,56 @@ namespace MouseHeart
             Div,
             Multi
         }
+    }
+    public class Varible
+    {
+        public static Dictionary<string, Varible> ListVaribles = new Dictionary<string, Varible>();
+        public static Varible NewVarible(string name) 
+        {
+            if (!ListVaribles.ContainsKey(name))
+            {
+                ListVaribles.Add(name, new Varible(0));
+            }
+            return ListVaribles[name];
+        }
+        public static void CreateXMLMap()
+        {
+           // XmlWriter writer = XmlWriter.Create("VaribleSittings.xml");
+            XmlDocument doc = new XmlDocument();
+            XmlElement e = doc.CreateElement("root");
+            foreach (string item in ListVaribles.Keys)
+            {
+                XmlNode n = doc.CreateElement("varible");
+                XmlAttribute a = doc.CreateAttribute("NameVarible");
+                a.Value = item.ToString();
+                n.InnerText = ListVaribles[item].Value.ToString();
+                n.Attributes.Append(a);
+                e.AppendChild(n);
+            }
+            doc.AppendChild(e);
+            doc.Save("VaribleSettings.xml");
+        }
+        public static void LoadVaribles()
+        {
+               // XmlWriter writer = XmlWriter.Create("VaribleSittings.xml");
+               XmlDocument doc = new XmlDocument();
+            doc.Load("VaribleSettings.xml");
+            XmlElement e = doc.GetElementById("root");
+            XmlNodeList list = doc.GetElementsByTagName("varible");
+            for (int i = 0; i < list.Count; i++)
+            {
+                string temp = list.Item(i).Attributes.Item(0).Value;
+                ListVaribles[temp].Value = float.Parse(list.Item(i).InnerText);
+            }
+        }
+        public static void SetVarible(string name , float d)
+            {
+                  ListVaribles[name].Value = d;
+            }
+
+        private Varible(float f) { Value = f;}
+        public float Value {get;set;}
+        
     }
 
 
