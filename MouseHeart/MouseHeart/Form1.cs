@@ -25,13 +25,19 @@ namespace MouseHeart
             //Coefficient.ListCoefficients["x"].Value = 4;
             //Coefficient.Add("y");
             //Coefficient.ListCoefficients["y"].Value = 8;
-            СalculationFormula f = new СalculationFormula("((2+y/2)/(x+2))");
+            СalculationFormula f = new СalculationFormula("((2+ydf/2)/(xc+2+xc+x))");
+            // Console.WriteLine(f.Calc());
+
+            //using (FormulaEditor form = new FormulaEditor(f))
+            //{
+            //    form.ShowDialog();
+            //}
+
+            Varible.LoadVaribles();
+            var d = Varible.ListVaribles;
             Console.WriteLine(f.Calc());
 
-            using (FormulaEditor form = new FormulaEditor(f))
-            {
-                form.ShowDialog();
-            } 
+            Console.ReadLine();
         }
         private void T_Tick(object sender, EventArgs e)
         {
